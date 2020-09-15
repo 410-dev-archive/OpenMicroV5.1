@@ -11,6 +11,12 @@
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
 #include "vex.h"
+#include "global_header.h"
+#include "mach/mach_def_motors.h"
+#include "mach/mach_def_sensors.h"
+#include "mach/mach_motorctl.h"
+#include "mach/mach_sensorctl.h"
+#include "macro/macro_.h"
 
 using namespace vex;
 
