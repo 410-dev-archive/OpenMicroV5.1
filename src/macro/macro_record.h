@@ -1,6 +1,3 @@
-#include <vector>
-using namespace std;
-
 vector<int> macro_action_storage;
 /* Action Code:
 
