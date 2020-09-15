@@ -1,9 +1,8 @@
-void macro_run() {
+int macro_record_start() { // Start recording macro
 	if (didMacroSaved) {
-		for (int index = 0; index < v.size(); ++index){
-			if (macro_action_storage[index] == 1) {
-				// Go Forward
-			}
-		}
+		// Overwriting macro.
+		// User need to press designated key map to actually rewrite
+	}else{
+		// Start recording macro
 	}
 }
