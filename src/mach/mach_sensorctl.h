@@ -1,6 +1,6 @@
 /*
 
-HOYOUN SONG - mach_sensorctl.h
+mach_sensorctl.h
 
 Team AVER [Advanced Vex EngineeRs]
 

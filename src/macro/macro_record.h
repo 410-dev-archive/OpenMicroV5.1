@@ -1,3 +1,17 @@
+/*
+
+macro_record.h
+
+Team AVER [Advanced Vex EngineeRs]
+
+2020.Sept.15
+
+This header contains function that records macro.
+
+Iteration Build: 1
+
+*/
+
 vector<int> macro_action_storage;
 /* Action Code:
 

@@ -1,6 +1,6 @@
 /*
 
-HOYOUN SONG - mach_def_sensors.h
+mach_def_sensors.h
 
 Team AVER [Advanced Vex EngineeRs]
 

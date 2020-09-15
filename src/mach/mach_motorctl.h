@@ -1,6 +1,6 @@
 /*
 
-HOYOUN SONG - mach_motorctl.h
+mach_motorctl.h
 
 Team AVER [Advanced Vex EngineeRs]
 

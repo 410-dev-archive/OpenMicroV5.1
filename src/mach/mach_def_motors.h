@@ -1,6 +1,6 @@
 /*
 
-HOYOUN SONG - mach_def_motors.h
+mach_def_motors.h
 
 Team AVER [Advanced Vex EngineeRs]
 
