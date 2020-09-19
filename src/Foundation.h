@@ -17,5 +17,9 @@ using namespace std;
 #include "mach/mach_def_motors.h"
 #include "mach/mach_def_sensors.h"
 #include "mach/mach_motorctl.h"
-#include "mach/mach_sensorctl.h"
+#include "mach/sensors/optical_shaft_encoder.h"
+#include "mach/sensors/ultrasonic.h"
+#include "mach/sensors/vision.h"
+#include "mach/mach_screenctl.h"
 #include "macro/macro_.h"
+
