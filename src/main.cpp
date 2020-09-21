@@ -12,9 +12,12 @@
 
 #include "vex.h"
 #include "Foundation.h"
-
+#include "macro_.h"
 
 using namespace vex;
+
+class mach_config{
+};
 
 int main() {
   // Initializing Robot Configuration. DO NOT REMOVE!

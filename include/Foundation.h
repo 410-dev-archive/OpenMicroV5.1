@@ -17,9 +17,7 @@ Iteration Build: 1
 #include "mach/mach_def_motors.h"
 #include "mach/mach_def_sensors.h"
 #include "mach/mach_motorctl.h"
-#include "mach/sensors/optical_shaft_encoder.h"
-#include "mach/sensors/ultrasonic.h"
-#include "mach/sensors/vision.h"
 #include "mach/mach_screenctl.h"
-#include "macro_.h"
+
+#define lcd AVERScreenController
 

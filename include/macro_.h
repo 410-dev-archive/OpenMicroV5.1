@@ -32,11 +32,20 @@ std::vector<float> macro_time_storage;
 
 bool didMacroSaved = false;
 
-int macro_record_start() { // Start recording macro
-	if (didMacroSaved) {
-		// Overwriting macro.
-		// User need to press designated key map to actually rewrite
-	}else{
-		// Start recording macro
-	}
-}
+class Macro{
+public:
+  int macro_record_start() { // Start recording macro
+    if (didMacroSaved) {
+      // Overwriting macro.
+      // User need to press designated key map to actually rewrite
+      return 0;
+    }else{
+      // Start recording macro
+      return 0;
+    }
+  }
+
+  int macro_load() {
+    return 0;
+  }
+};
