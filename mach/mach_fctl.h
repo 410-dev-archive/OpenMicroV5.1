@@ -22,7 +22,7 @@ public:
 			char *fileName = new char[loadFile.length() + 1];
 			strcpy(fileName, loadFile.c_str());
 
-			int32_t fsize = sdcard::filesize(fileName);
+			int32_t fsize = sdcard.filesize(fileName);
 
 			// Checks if the file size has value or not
 			if (fsize != nullptr) {
