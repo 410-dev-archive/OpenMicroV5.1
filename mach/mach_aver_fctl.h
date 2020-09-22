@@ -1,3 +1,11 @@
+/*
+
+AVER Code Write Department
+
+VEX V5 Brain File Controller
+
+*/
+
 #include "vex.h"
 #include <string>
 
@@ -9,7 +17,7 @@ using namespace std;
 
 #define sdcard vex::brain::sdcard
 
-class Filecontrol {
+class AEFileControl {
 public:
 
 	// Checks whether a file exists or not

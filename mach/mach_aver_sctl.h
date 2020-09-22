@@ -1,10 +1,18 @@
+/*
+
+AVER Code Write Department
+
+VEX V5 Brain Screen Controller
+
+*/
+
 #include "vex.h"
 #include <string>
 
 using namespace vex;
 using namespace std;
 
-class Printer {
+class AEScreencontrol {
 public:
   void init() {
     Brain.Screen.render(true, false);
@@ -28,5 +36,9 @@ public:
   void clearLine(int lineNumber) {
     Brain.Screen.clearLine(lineNumber, color::black);
     Brain.Screen.render();
+  }
+
+  void clearScreen() {
+    /* Clear entire screen */
   }
 };
