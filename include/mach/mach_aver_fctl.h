@@ -15,31 +15,25 @@ VEX V5 Brain File Controller
 using namespace vex;
 using namespace std;
 
-#define sdcard vex::brain::sdcard
+//#define sdcard vex::brain::sdcard
 
 class AEFileControl {
 public:
 	// Checks whether a file exists or not
 	bool doesFileExists(string loadFile) {
-    if (!Brain.SDcard.isInserted()) {
-      cout << "not inserted" << endl;
+    // if (!Brain.SDcard.isInserted()) {
+    //   cout << "not inserted" << endl;
+    //   return false;
+    // }
+    try{
+      ifstream fopen(loadFile.data());
+      if (fopen.is_open()) {
+        return true;
+      }
+      return false;
+    }catch(exception e){
       return false;
     }
-
-    char *fileName = new char[loadFile.length() + 1];
-    strcpy(fileName, loadFile.c_str());
-    return true;
-
-    /*
-    int32_t fsize = Brain.SDcard.filesize(fileName);
-
-    // Checks if the file size has value or not
-    if (fsize != nullptr) {
-      return true;
-    }else{
-      return false;
-    }
-    */
 	}
 
 	// Load string data from saved text file
