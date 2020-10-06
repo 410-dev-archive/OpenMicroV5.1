@@ -21,7 +21,8 @@ public:
   int setLinePrefix(int lineNumber, string text) {
     Brain.Screen.clearLine(lineNumber, color::black);
     Brain.Screen.setCursor(lineNumber, 0);
-    Brain.Screen.print(text);
+    const char *toPrint = text.c_str();
+    Brain.Screen.print(toPrint);
     Brain.Screen.render();
     return text.length();
   }
@@ -29,7 +30,8 @@ public:
   void setValueOfLine(int lineNumber, int prefixLength, string text) {
     Brain.Screen.clearLine(lineNumber, color::black);
     Brain.Screen.setCursor(lineNumber, prefixLength);
-    Brain.Screen.print(text);
+    const char *toPrint = text.c_str();
+    Brain.Screen.print(toPrint);
     Brain.Screen.render();
   }
 
