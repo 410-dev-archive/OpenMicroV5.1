@@ -31,7 +31,7 @@ private:
 	vector<string> loadedMacro_time{}; // Holds macro time in order
 
 	const string fileWithMacroList = "macro_file_table";
-	AEScreencontrol screen;
+	AEScreenControl screen;
 public:
 
 	// Load macro by file name

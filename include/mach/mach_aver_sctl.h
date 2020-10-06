@@ -12,7 +12,7 @@ VEX V5 Brain Screen Controller
 using namespace vex;
 using namespace std;
 
-class AEScreencontrol {
+class AEScreenControl {
 public:
   void init() {
     Brain.Screen.render(true, false);
