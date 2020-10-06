@@ -11,7 +11,7 @@ VEX V5 Brain Screen Controller
 using namespace vex;
 using namespace std;
 
-class AEMotorController {
+class AEMotorControl {
 private:
 	controller ctl = controller();
 public:
