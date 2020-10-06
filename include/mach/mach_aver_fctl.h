@@ -37,11 +37,11 @@ public:
 	}
 
 	// Load string data from saved text file
-	string loadString(string fileName) {
+	string loadString(string loadFile) {
 		if (!Brain.SDcard.isInserted()) {
 			return "";
 		}else{
-			ifstream openFile(fileName.data());
+			ifstream openFile(loadFile.data());
 			if(openFile.is_open()) {
         string line;
 				string constructReturn = "";
@@ -54,7 +54,7 @@ public:
 		}
 	}
 
-	int saveString(string saveFile, string contents) {
+	int saveString(string fileTitle, string contents) {
 		if (!Brain.SDcard.isInserted()) {
 			return 0;
 		}else{
