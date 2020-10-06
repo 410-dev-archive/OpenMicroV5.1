@@ -4,7 +4,9 @@ This markdown file is a documentation of AVER Machine controlling API.
 Expand the collapsible table to see the methods that are accessible.
 
 [DP] tag means that the method / class is deprecated.
+
 [UD] tag means that the method / class is under development.
+
 [BF] tag means that the method / class is currently failing.
 
 <details>
@@ -20,7 +22,7 @@ Expand the collapsible table to see the methods that are accessible.
   	std
 
   <details>
-    <summary>   (bool) doesFileExists(loadFile: std::string)</summary>
+    <summary>-----(bool) doesFileExists(loadFile: std::string)</summary>
 
 		This method returns true or false based on the fact whether
     the specified file exists on the microSD storage inserted 
@@ -28,7 +30,7 @@ Expand the collapsible table to see the methods that are accessible.
   </details>
 
   <details>
-    <summary>   (string) loadString(loadFile: std::string)</summary>
+    <summary>-----(string) loadString(loadFile: std::string)</summary>
 
 		This method returns the string that is saved in the specified 
     file that exists on the microSD storage inserted in VEX V5 Brain.
@@ -37,7 +39,7 @@ Expand the collapsible table to see the methods that are accessible.
   </details>
 
   <details>
-    <summary>   (int) saveString(fileTitle: string, contents: std::string)</summary>
+    <summary>-----(int) saveString(fileTitle: string, contents: std::string)</summary>
 
     	This method saves string in 'contents' variable, with the file 
       name of 'fileTitle' variable. It returns an exit code.
@@ -60,14 +62,14 @@ Expand the collapsible table to see the methods that are accessible.
   	std
 
   <details>
-    <summary>   (void) init()</summary>
+    <summary>-----(void) init()</summary>
 
 		This method runs Brain.Screen.render method 
     with parameter: true, false.
   </details>
 
   <details>
-    <summary>   (int) setLinePrefix(lineNumber: int, text: std::string)</summary>
+    <summary>-----(int) setLinePrefix(lineNumber: int, text: std::string)</summary>
 
 		This method sets the n th line (Determined by lineNumber variable)
      with the specified text in 'text' variable.
@@ -76,7 +78,7 @@ Expand the collapsible table to see the methods that are accessible.
   </details>
 
   <details>
-    <summary>   (void) setValueOfLine(lineNumber: int, prefixLength: int, text: std::string)</summary>
+    <summary>-----(void) setValueOfLine(lineNumber: int, prefixLength: int, text: std::string)</summary>
 
     	This method sets the value of a line. This method can specify
       the starting cursor location with lineNumber (vertical), 
@@ -84,13 +86,13 @@ Expand the collapsible table to see the methods that are accessible.
   </details>
 
    <details>
-    <summary>   (void) clearLine(lineNumber: int)</summary>
+    <summary>-----(void) clearLine(lineNumber: int)</summary>
 
     	This method clears the specified line.
   </details>
 
    <details>
-    <summary>   (void) clearScreen()</summary>
+    <summary>-----(void) clearScreen()</summary>
 
     	This method clears the entire screen.
   </details>
@@ -103,11 +105,11 @@ Expand the collapsible table to see the methods that are accessible.
   	vex.h
 
   This class uses namespace on:
-  	vex
+  	vex,
   	std
 
   <details>
-    <summary>   [UD] [BF] (int) runMotor(motorObjects: vex::motor[], timeInMillisecond: int)</summary>
+    <summary>-----[UD] [BF] (int) runMotor(motorObjects: vex::motor[], timeInMillisecond: int)</summary>
 
     	This method runs multiple motors at once, that is included in motorObjects array.
     	The running time should be determined by the variable 'timeInMillisecond'.
