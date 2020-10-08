@@ -58,7 +58,7 @@ public:
 		if (!Brain.SDcard.isInserted()) {
 			return 0;
 		}else{
-			ofstream writeFile(saveFile.data());
+			ofstream writeFile (fileTitle, ofstream::out);
 			if(writeFile.is_open()) {
 				writeFile << contents + "\n";
 				writeFile.close();

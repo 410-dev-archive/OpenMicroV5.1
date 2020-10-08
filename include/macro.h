@@ -18,7 +18,7 @@ Depends on:
 #include "hardwareinfo.h"
 
 #include "mach/mach_aver_fctl.h"
-#include "mach/mach_aver_sctl.h"
+#include "mach/mach_aver_scctl.h"
 #include "mach/mach_aver_rcctl.h"
 
 using namespace vex;

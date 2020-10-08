@@ -15,15 +15,15 @@ class AEMotorControl {
 private:
 	controller ctl = controller();
 public:
-	int runMotor(motor[] motorObjects, int timeInMillisecond) {
+	int runMotor(motor motorObjects[], int motorCount, int timeInMillisecond) {
 		try{
-			for(int indexOfObjects = 0; indexOfObjects < motorObjects.length; indexOfObjects++) {
+			for(int indexOfObjects = 0; indexOfObjects < motorCount; indexOfObjects++) {
 				motorObjects[indexOfObjects].spin(directionType::fwd, ctl.Axis3.value(),velocityUnits::pct);
 			}
 			task::sleep(timeInMillisecond);
 			return 0;
-		}catch(Exception e) {
+		}catch(exception e) {
 			return 1;
 		}
 	}
-}
+};
