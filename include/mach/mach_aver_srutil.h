@@ -12,58 +12,57 @@ VEX V5 Sensor Utilities
 using namespace vex;
 
 class AESensorsUtility {
+private:
+  vision visionObject;
 public:
+
+  // Resets the encoder data to 0
   void resetShaftEncoderValue(encoder encoderObject) {
     encoderObject.resetRotation();
   }
+
+  // Returns the data inside the specified encoder object value
 	int getShaftEncoderValue(encoder encoderObject) {
     return encoderObject.value();
 	}
-};
 
+  vision::signature setVisionSensorProperty(vision visionObject, int yuvData[], float rangeScaleFactor) {
+    // Index order for yuvData
+    // 0: ID
+    // 1: u-axis minimum
+    // 2: u-axis maximum
+    // 3: u-axis average
+    // 4: v-axis minimum
+    // 5: v-axis maximum
+    // 6: v-axis average
+    // 7: signature type
+    // 8: Brightness
 
-/*
+    vision::signature BLOB(yuvData[0], yuvData[1], yuvData[2], yuvData[3], yuvData[4], yuvData[5], yuvData[6], rangeScaleFactor, yuvData[7]);
+    visionObject.setBrightness(yuvData[8]);
 
-// vision sensor test code for later
+    // signature init
+    visionObject.setSignature(BLOB);
 
-int id = 1;           // signature id
-int uMin = 101;       // min u-axis
-int uMax = 3217;      // max u-axis
-int uMean = 1659;     // mean u-axis
-int vMin = -4681;     // min v-axis
-int vMax = -3869;     // max v-axis
-int vMean = -4275;    // mean v-axis
-float range = 2.3;    // range scale factor
-int type = 0;         // signature type
-
-
-vex::vision vs(vex::PORT9);
-vex::vision::signature BLOB(id, uMin, uMax, uMean, vMin, vMax, vMean, range, type);
-
-
-int main(void) {
-  // brightness init
-  vs.setBrightness(50);
-
-  // signature init
-  vs.setSignature(BLOB);
-
-  // camera width: 316 pixel
-  int mid_x = 316 / 2;
-  int cur_obj_cnt = 0;
-  int cur_obj_center_x = 0;
-
-  while(true){
-
-    // snapshot taken
-    vs.takeSnapshot(BLOB);
-
-    cur_obj_cnt = vs.objectCount;
-
-    if(cur_obj_cnt){
-      cur_obj_center_x = vs.largestObject.centerX;
-    }
+    return BLOB;
   }
-}
 
-*/
+  // Returns whether optical sensor is recognising the specified colored object
+  bool isObjectWithColorExistsInFrontOfVisionSensor(vision::signature BLOB, int cameraData[]) {
+    // Index order for cameraData (Originally named)
+    // 0: mid_x
+    // 1: cur_obj_cnt
+    // 2: cur_obj_center_x
+
+    visionObject.takeSnapshot(BLOB);
+    cameraData[1] = visionObject.objectCount;
+
+    if(cameraData[1]){
+      cameraData[2] = visionObject.largestObject.centerX;
+      return true;
+    }
+    return false;
+
+     // Need verification here
+  }
+};
