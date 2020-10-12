@@ -4,6 +4,7 @@ extern brain Brain;
 
 // VEXcode devices
 extern controller Controller1;
+extern encoder EncoderA;
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.

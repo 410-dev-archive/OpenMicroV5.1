@@ -4,6 +4,10 @@ using namespace vex;
 using signature = vision::signature;
 using code = vision::code;
 
+encoder EncoderA = encoder(Brain.ThreeWirePort.A);
+
+
+
 // A global instance of brain used for printing to the V5 Brain screen
 brain  Brain;
 
