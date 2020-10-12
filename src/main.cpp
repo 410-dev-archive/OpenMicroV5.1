@@ -27,24 +27,6 @@ competition Competition;
 vex::controller Controller;
 AEMotorControl motorctl;
 
-// pre-autonomous code
-void pre_auton(void){
-  vexcodeInit();
-}
-
-// autonomous code
-void autonomous(void){
-
-}
-
-//user control
-void usercontrol(void){
-  AEFileControl averFileController;
-  bool r = averFileController.doesFileExists("test.txt");
-  cout<<r<<endl;
-  while (true){
-    wait(20, msec);
-  }
 void motorCall() {
   motor motorArray[] = {TEST};
   motorctl.runMotor(motorArray, 1, 5000);
@@ -52,7 +34,6 @@ void motorCall() {
 
 // main
 int main(){
-  usercontrol();
   // Sensor Test - Displayed on Brain
   AEScreenControl scctl;
   scctl.init();
