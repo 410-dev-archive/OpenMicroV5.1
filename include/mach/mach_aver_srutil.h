@@ -13,7 +13,7 @@ using namespace vex;
 
 class AESensorsUtility {
 private:
-  vision visionObject;
+  vision visionObject; // Error of in constructor
 public:
 
   // Resets the encoder data to 0
