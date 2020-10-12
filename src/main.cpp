@@ -11,8 +11,14 @@
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
 #include "vex.h"
+#include "hardwareinfo.h"
 #include "mach/mach_aver_fctl.h"
+#include "mach/mach_aver_scctl.h"
+#include "mach/mach_aver_srutil.h"
+#include "mach/mach_aver_mtctl.h"
 #include <iostream>
+#include <string>
+#include <sstream>
 
 using namespace vex;
 using namespace std;
