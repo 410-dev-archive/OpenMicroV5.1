@@ -14,10 +14,13 @@ using namespace std;
 
 class AEScreenControl {
 public:
+
+  // Initializes screen
   void init() {
     Brain.Screen.render(true, false);
   }
 
+  // Should be used as labeling data
   short setLinePrefix(int lineNumber, string text) {
     Brain.Screen.clearLine(lineNumber, color::black);
     Brain.Screen.setCursor(lineNumber, 0);
@@ -27,6 +30,7 @@ public:
     return (short) text.length();
   }
 
+  // Set value of line, could be use as setting the entire line or after the data label
   void setValueOfLine(int lineNumber, int prefixLength, string text) {
     Brain.Screen.clearLine(lineNumber, color::black);
     Brain.Screen.setCursor(lineNumber, prefixLength);
@@ -35,11 +39,13 @@ public:
     Brain.Screen.render();
   }
 
+  // Clears specified line
   void clearLine(int lineNumber) {
     Brain.Screen.clearLine(lineNumber, color::black);
     Brain.Screen.render();
   }
 
+  // Clears entire screen
   void clearScreen() {
     Brain.Screen.clearScreen(color::black);
   }
