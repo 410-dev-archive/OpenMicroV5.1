@@ -13,11 +13,16 @@ using namespace vex;
 
 class AESensorsUtility {
 public:
-	int getShaftEncoderValue() {
-		return 0;
+  void resetShaftEncoderValue(encoder encoderObject) {
+    encoderObject.resetRotation();
+  }
+	int getShaftEncoderValue(encoder encoderObject) {
+    return encoderObject.value();
 	}
 };
 
+
+/*
 
 // vision sensor test code for later
 
@@ -34,6 +39,7 @@ int type = 0;         // signature type
 
 vex::vision vs(vex::PORT9);
 vex::vision::signature BLOB(id, uMin, uMax, uMean, vMin, vMax, vMean, range, type);
+
 
 int main(void) {
   // brightness init
@@ -59,3 +65,5 @@ int main(void) {
     }
   }
 }
+
+*/
