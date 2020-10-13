@@ -1,0 +1,26 @@
+{
+    "configurations": [
+        {
+            "name": "Mac",
+            "includePath": [
+                "${workspaceFolder}/../**",
+                "/Applications/VEXcode Pro V5.app/Contents/Resources/sdk/vexv5/include"
+            ],
+            "defines": [],
+            "macFrameworkPath": [
+                "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks"
+            ],
+            "compilerPath": "/usr/bin/clang",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "clang-x64",
+            "browse": {
+                "path": [
+                    "../",
+                    "/Applications/VEXcode Pro V5.app/Contents/Resources/sdk/vexv5/include"
+                ]
+            }
+        }
+    ],
+    "version": 4
+}
