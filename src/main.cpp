@@ -19,20 +19,18 @@ using namespace vex;
 using namespace std;
 
 competition Competition;
-vex::controller Controller;
+controller Controller;
 RSManager System;
 
 // Method for async (vex::thread)
 void motorCall() {
-  motor motorArray[] = {TEST};
-  System.mctl.runMotor(motorArray, 1, 5000);
+  System.mctl.runMotor(WHEEL_FBMOVEMENT, 1, 5000);
 }
 
 // main
 int main(){
   // Launches Resource Manager
   System.init();
-
   vex::thread newTask(motorCall); // Motor Async Run
 
   // Sets Encoder Value Prefix
@@ -41,8 +39,6 @@ int main(){
   // Keep receives value from Shaft Encoder until motorctl.motorStatus is true.
   while(System.mctl.isMotorSessionRunning()) {
     // Converts returned shaft encoder value to string and sets the value of line
-    stringstream sstream;
-    sstream << (System.srutil.getShaftEncoderValue(EncoderA), "");
-    System.scctl.setValueOfLine(5, lengthOfPrefix_ShaftEncoder, sstream.str());
+    System.scctl.setValueOfLine(5, lengthOfPrefix_ShaftEncoder, System.convertToString((double) System.srutil.getShaftEncoderValue(EncoderA)));
   }
 }
