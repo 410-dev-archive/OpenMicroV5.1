@@ -93,4 +93,11 @@ public:
     if (index + 1 == livedisplay_maximum_line) return; // If does not exists then quit
     scctl.setValueOfLine(livedisplay_allocatedLineNumber.at(index), livedisplay_allocatedLine_prefixLength.at(index), " " + content); // Update using scctl
   }
+
+  // Convert int to string
+  string convertToString(double data) {
+    stringstream sstream;
+    sstream << (data, "");
+    return sstream.str();
+  }
 };
