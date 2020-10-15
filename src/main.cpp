@@ -52,6 +52,10 @@ int main(){
   int camData[] = {0, 0, 0};
 
   // Keep receives value from Shaft Encoder until motorctl.motorStatus is true.
+  System.status("Starting async task...");
+
+  /* 비동기 (async) 로 async_task 켜지도록 해줘 - vex::thread 라d vex::task 로는 안되더라 */
+
   while(System.mctl.motorStatus) {
     // Converts returned shaft encoder value to string and sets the value of line
     System.scctl.setValueOfLine(5, lengthOfPrefix_ShaftEncoder, System.convertToString(testShaftEncoder.value()));
