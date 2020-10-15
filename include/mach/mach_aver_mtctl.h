@@ -24,7 +24,7 @@ public:
 			for(int indexOfObjects = 0; indexOfObjects < motorCount; indexOfObjects++) {
 				motorObjects[indexOfObjects].spin(directionType::fwd);
 			}
-			task::sleep(timeInMillisecond);
+			//task::sleep(timeInMillisecond);
       motorStatus = false;
 			return 0;
 		}catch(exception e) {
@@ -32,11 +32,11 @@ public:
 		}
 	}
 
-  int runSingleMotor(motor motorObject, int timeInMillisecond) {
+  int runSingleMotor(motor motorObject) {
     try{
     	motorStatus = true;
     	motorObject.spin(directionType::fwd);
-    	task::sleep(timeInMillisecond);
+    	//task::sleep(timeInMillisecond);
     	motorStatus = false;
 		return 0;
 	}catch(exception e) {
