@@ -18,14 +18,12 @@ public:
   controller ctl = controller();
   bool motorStatus = false;
 
-	int runMotor(motor motorObjects[], int motorCount, int timeInMillisecond) {
+	int runMotors(motor motorObjects[], int motorCount) {
 		try{
-      motorStatus = true;
+      		motorStatus = true;
 			for(int indexOfObjects = 0; indexOfObjects < motorCount; indexOfObjects++) {
 				motorObjects[indexOfObjects].spin(directionType::fwd);
 			}
-			//task::sleep(timeInMillisecond);
-      motorStatus = false;
 			return 0;
 		}catch(exception e) {
 			return 1;
@@ -36,8 +34,12 @@ public:
     try{
     	motorStatus = true;
     	motorObject.spin(directionType::fwd);
-    	//task::sleep(timeInMillisecond);
-    	motorStatus = false;
+		return 0;
+	}catch(exception e) {
+		return 1;
+	}
+  }
+  
   int stopMotors(motor motorObjects[], int motorCount) {
 	try{
 		motorStatus = false;
