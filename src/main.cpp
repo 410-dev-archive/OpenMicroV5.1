@@ -15,7 +15,7 @@
 
 #include "hardwareinfo.h"
 
-#include "RSManager/main.h"
+#include "mach/mach_main.h"
 
 using namespace vex;
 using namespace std;
