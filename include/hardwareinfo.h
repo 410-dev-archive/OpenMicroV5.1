@@ -13,6 +13,9 @@ using namespace vex;
 // vex::motor holdUp (vex::PORT5, vex::gearSetting::ratio18_1, false);
 motor TEST (vex::PORT1, vex::gearSetting::ratio18_1, false); // Param: (Port, GearSetting, Reverse);
 
+triport threeWirePort(PORT22);
+encoder testShaftEncoder = encoder(threeWirePort.A);
+
 motor WHEEL_FBMOVEMENT[] = {TEST};
 motor WHEEL_ROTATE_LEFTSET[] = {};
 motor WHEEL_ROTATE_RIGHTSET[] = {};
