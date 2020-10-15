@@ -43,10 +43,7 @@ int main(){
   int camData[] = {0, 0, 0};
 
   // Keep receives value from Shaft Encoder until motorctl.motorStatus is true.
-  // while(System.mctl.isMotorSessionRunning()) {
-  // System.scctl.setValueOfLine(5, lengthOfPrefix_ShaftEncoder, "Hello World");
-  // while(System.mctl.motorStatus) {
-  while (true) {
+  while(System.mctl.motorStatus) {
     // Converts returned shaft encoder value to string and sets the value of line
     System.scctl.setValueOfLine(5, lengthOfPrefix_ShaftEncoder, System.convertToString(testShaftEncoder.value()));
   }
