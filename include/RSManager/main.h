@@ -12,12 +12,12 @@ using namespace vex;
 using namespace std;
 
 class RSManager {
-private:
+public:
 
   // RS Manager required value
   string runArgument = "";
-  bool startScreenSplashed = false;
-  const short loggingLine = 11;
+  const short loggingLine = 4;
+  vector<string> log{};
 
   // Live Display related content
   const short livedisplay_maximum_line = 5;
@@ -25,19 +25,6 @@ private:
   vector<short> livedisplay_allocatedLineNumber{};
   vector<short> livedisplay_allocatedLine_prefixLength{};
   vector<string> livedisplay_allocatedLine_label{};
-
-  // Displays title
-  void startScreen() {
-    if (startScreenSplashed) {
-      startScreenSplashed = true;
-      scctl.init();
-      scctl.clearScreen();
-      scctl.setValueOfLine(1, 0, "Team AVER Mach - Test Version 0.0.1");
-      scctl.setValueOfLine(2, 0, "===================================");
-    }
-  }
-
-public:
 
   // Able to access from other components
   AEFileControl fctl;
@@ -58,21 +45,27 @@ public:
 
   // Shows basic logs
   void init(void) {
-    startScreen();
+    scctl.init();
+    scctl.clearScreen();
+    scctl.setValueOfLine(1, 0, "Team AVER Mach - Test Version 0.0.1");
+    scctl.setValueOfLine(2, 0, "===================================");
     scctl.setValueOfLine(3, 0, "Program Argument: " + runArgument);
-    scctl.setValueOfLine(4, 0, "RSManager should accept request from main binary.");
   }
 
-  // Set log
-  void log(string logContent) {
+  // Set status
+  void status(string logContent) {
     scctl.clearLine(loggingLine);
-    scctl.setValueOfLine(loggingLine, 0, "RSLOG: " + logContent);
+    log.push_back(logContent);
+    scctl.setValueOfLine(loggingLine, 0, "Status: " + logContent);
   }
 
   // Provide panic and stops program
   void panic(string logContent, int exitCode){
     scctl.clearScreen();
     scctl.setValueOfLine(1, 0, logContent);
+    for(short i = 0; i < log.size(); i++) {
+      scctl.setValueOfLine(i + 3, 0, log.at(i));
+    }
     exit(exitCode);
   }
 
