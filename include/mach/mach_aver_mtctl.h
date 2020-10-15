@@ -13,18 +13,16 @@ using namespace std;
 
 class AEMotorControl {
 private:
-	controller ctl = controller();
-  bool motorStatus = false;
+	
 public:
-  bool isMotorSessionRunning() {
-    return motorStatus;
-  }
+  controller ctl = controller();
+  bool motorStatus = false;
 
 	int runMotor(motor motorObjects[], int motorCount, int timeInMillisecond) {
 		try{
       motorStatus = true;
 			for(int indexOfObjects = 0; indexOfObjects < motorCount; indexOfObjects++) {
-				motorObjects[indexOfObjects].spin(directionType::fwd, ctl.Axis3.value(),velocityUnits::pct);
+				motorObjects[indexOfObjects].spin(directionType::fwd);
 			}
 			task::sleep(timeInMillisecond);
       motorStatus = false;
@@ -33,4 +31,16 @@ public:
 			return 1;
 		}
 	}
+
+  int runSingleMotor(motor motorObject, int timeInMillisecond) {
+    try{
+    	motorStatus = true;
+    	motorObject.spin(directionType::fwd);
+    	task::sleep(timeInMillisecond);
+    	motorStatus = false;
+		return 0;
+	}catch(exception e) {
+		return 1;
+	}
+  }
 };
