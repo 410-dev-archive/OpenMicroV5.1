@@ -24,4 +24,4 @@ motor MOTOR_PULL_BALL[] = {};
 // Sensors
 triport threeWirePort(PORT22);
 encoder testShaftEncoder = encoder(threeWirePort.A);
-vision testVisionSensor = vision(11);
+vision testVisionSensor = vision(2);
