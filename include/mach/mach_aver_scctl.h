@@ -31,8 +31,7 @@ public:
   }
 
   // Set value of line, could be use as setting the entire line or after the data label
-  void setValueOfLine(int lineNumber, int prefixLength, string text) {
-    Brain.Screen.clearLine(lineNumber, color::black);
+  void setValueOfLine(short lineNumber, short prefixLength, string text) {
     Brain.Screen.setCursor(lineNumber, prefixLength);
     const char *toPrint = text.c_str();
     Brain.Screen.print(toPrint);
