@@ -41,7 +41,10 @@ int main(){
 
   // Keep receives value from Shaft Encoder until motorctl.motorStatus is true.
   // while(System.mctl.isMotorSessionRunning()) {
-  //   // Converts returned shaft encoder value to string and sets the value of line
-  //   System.scctl.setValueOfLine(5, lengthOfPrefix_ShaftEncoder, System.convertToString((double) System.srutil.getShaftEncoderValue(EncoderA)));
-  // }
+  // System.scctl.setValueOfLine(5, lengthOfPrefix_ShaftEncoder, "Hello World");
+  // while(System.mctl.motorStatus) {
+  while (true) {
+    // Converts returned shaft encoder value to string and sets the value of line
+    System.scctl.setValueOfLine(5, lengthOfPrefix_ShaftEncoder, System.convertToString(testShaftEncoder.value()));
+  }
 }
