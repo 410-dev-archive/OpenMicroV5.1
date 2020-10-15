@@ -33,9 +33,9 @@ int main(){
   System.init();
   // vex::thread newTask(motorCall); // Motor Async Run
 
-  System.status("Motor running...");
-  System.mctl.runSingleMotor(TEST, 3000);
-  System.status("Motor stopped.");
+  System.status("Started motor!");
+  System.mctl.runSingleMotor(TEST);
+  System.status("Shaft encoder should work.");
   // Sets Encoder Value Prefix
   short lengthOfPrefix_ShaftEncoder = System.scctl.setLinePrefix(5, "Shaft Encoder Value: ");
 
