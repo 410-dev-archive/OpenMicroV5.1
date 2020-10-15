@@ -62,10 +62,16 @@ public:
     exit(exitCode);
   }
 
+  /* 승모 여기서부터 작업하면 됨 */
+  void livedisplay_configure() {}
+  void livedisplay_updateValue() {}
+  /* 여기까지 */
+
   // Convert int to string
   string convertToString(double data) {
     ostringstream oss;
     oss << data;
     return oss.str();
   }
+
 };

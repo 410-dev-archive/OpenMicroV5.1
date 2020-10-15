@@ -38,6 +38,9 @@ int main(){
   System.status("Shaft encoder should work.");
   // Sets Encoder Value Prefix
   short lengthOfPrefix_ShaftEncoder = System.scctl.setLinePrefix(5, "Shaft Encoder Value: ");
+  /* 여기에서 빨간색 인식하게 코드좀 짜줘 */
+  int yuvData[] = {0, 0, 10, 5, 0, 100, 50, 0, 50};
+  int camData[] = {0, 0, 0};
 
   // Keep receives value from Shaft Encoder until motorctl.motorStatus is true.
   // while(System.mctl.isMotorSessionRunning()) {
