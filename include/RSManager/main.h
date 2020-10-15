@@ -89,8 +89,8 @@ public:
 
   // Convert int to string
   string convertToString(double data) {
-    stringstream sstream;
-    sstream << (data, "");
-    return sstream.str();
+    ostringstream oss;
+    oss << data;
+    return oss.str();
   }
 };
