@@ -14,11 +14,13 @@ using namespace vex;
 motor PULL_MOTOR_1 (vex::PORT1, vex::gearSetting::ratio18_1, true); // Param: (Port, GearSetting, Reverse);
 motor PULL_MOTOR_2 (vex::PORT2, vex::gearSetting::ratio18_1, false);
 
-
 motor WHEEL_FRONT_LEFT (vex::PORT3, vex::gearSetting::ratio18_1, false);
 motor WHEEL_BACK_LEFT (vex::PORT4, vex::gearSetting::ratio18_1, false);
 motor WHEEL_FRONT_RIGHT (vex::PORT5, vex::gearSetting::ratio18_1, true);
 motor WHEEL_BACK_RIGHT (vex::PORT6, vex::gearSetting::ratio18_1, true);
+
+motor DUMMY(vex::PORT7, vex::gearSetting::ratio18_1, false);
+motor DUMMY2(vex::PORT8, vex::gearSetting::ratio18_1, false);
 
 motor MOTOR_PULL_BALL[] = {PULL_MOTOR_1, PULL_MOTOR_2};
 
