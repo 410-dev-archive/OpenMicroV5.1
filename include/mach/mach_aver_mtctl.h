@@ -18,11 +18,11 @@ public:
   controller ctl = controller();
   bool motorStatus = false;
 
-	int runMotors(motor motorObjects[], int motorCount) {
+	int runMotors(motor motorObjects[], int motorCount, directionType direction) {
 		try{
       		motorStatus = true;
 			for(int indexOfObjects = 0; indexOfObjects < motorCount; indexOfObjects++) {
-				motorObjects[indexOfObjects].spin(directionType::fwd);
+				motorObjects[indexOfObjects].spin(direction);
 			}
 			return 0;
 		}catch(exception e) {
@@ -30,10 +30,10 @@ public:
 		}
 	}
 
-  int runSingleMotor(motor motorObject) {
+  int runSingleMotor(motor motorObject, directionType direction) {
     try{
     	motorStatus = true;
-    	motorObject.spin(directionType::fwd);
+    	motorObject.spin(direction);
 		return 0;
 	}catch(exception e) {
 		return 1;

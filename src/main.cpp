@@ -30,8 +30,8 @@ int main(){
   // vex::thread newTask(motorCall); // Motor Async Run
 
   System.status("Started motor!");
-  System.mctl.runSingleMotor(PULL_MOTOR_1);
-  System.mctl.runSingleMotor(PULL_MOTOR_2);
+  System.mctl.runSingleMotor(PULL_MOTOR_1, directionType::fwd);
+  System.mctl.runSingleMotor(PULL_MOTOR_2, directionType::fwd);
   System.status("Shaft encoder should work.");
 
   // Sets Encoder Value Prefix
