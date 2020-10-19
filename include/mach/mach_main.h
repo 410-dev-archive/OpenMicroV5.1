@@ -15,7 +15,6 @@ class AESystem {
 public:
 
   // RS Manager required value
-  string runArgument = "";
   const short loggingLine = 4;
   vector<string> log{};
 
@@ -25,14 +24,8 @@ public:
   AESensorsUtility srutil;
   AEScreenControl scctl;
 
-  // Constructor with startup argument
-  AESystem(string startupArgument) {
-    runArgument = startupArgument; // Set arg in private storage
-    init();
-  }
-
-  // Constructor without startup argument
-  AESystem() {
+  // Constructor
+  AESystem(string nd) {
     init();
   }
 
@@ -42,7 +35,6 @@ public:
     scctl.clearScreen();
     scctl.setValueOfLine(1, 0, "Team AVER Mach - Test Version 0.0.4-3");
     scctl.setValueOfLine(2, 0, "=====================================");
-    scctl.setValueOfLine(3, 0, "Program Argument: " + runArgument);
   }
 
   // Set status
