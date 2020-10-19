@@ -11,15 +11,15 @@ using namespace vex;
 // vex::motor Intake2 (vex::PORT7, vex::gearSetting::ratio18_1, true);
 // vex::motor Arm (vex::PORT8, vex::gearSetting::ratio18_1, false);
 // vex::motor holdUp (vex::PORT5, vex::gearSetting::ratio18_1, false);
-motor TEST (vex::PORT1, vex::gearSetting::ratio18_1, false); // Param: (Port, GearSetting, Reverse);
+motor PULL_MOTOR_1 (vex::PORT1, vex::gearSetting::ratio18_1, true); // Param: (Port, GearSetting, Reverse);
+motor PULL_MOTOR_2 (vex::PORT2, vex::gearSetting::ratio18_1, false);
 
 
 
-
-motor WHEEL_FBMOVEMENT[] = {TEST};
+motor WHEEL_FBMOVEMENT[] = {};
 motor WHEEL_ROTATE_LEFTSET[] = {};
 motor WHEEL_ROTATE_RIGHTSET[] = {};
-motor MOTOR_PULL_BALL[] = {};
+motor MOTOR_PULL_BALL[] = {PULL_MOTOR_1, PULL_MOTOR_2};
 
 // Sensors
 triport threeWirePort(PORT22);

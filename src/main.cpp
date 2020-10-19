@@ -11,7 +11,6 @@
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
 #include "vex.h"
-#include <future>
 
 #include "hardwareinfo.h"
 
@@ -24,13 +23,6 @@ competition Competition;
 controller Controller;
 RSManager System("");
 
-void async_task() {
-  System.status("Started async function.");
-  task::sleep(1000);
-  System.status("Motor stop!");
-  System.mctl.stopSingleMotor(TEST);
-}
-
 // main
 int main(){
   // Launches Resource Manager
@@ -38,7 +30,8 @@ int main(){
   // vex::thread newTask(motorCall); // Motor Async Run
 
   System.status("Started motor!");
-  System.mctl.runSingleMotor(TEST);
+  System.mctl.runSingleMotor(PULL_MOTOR_1);
+  System.mctl.runSingleMotor(PULL_MOTOR_2);
   System.status("Shaft encoder should work.");
 
   // Sets Encoder Value Prefix
