@@ -15,16 +15,16 @@ motor PULL_MOTOR_1 (vex::PORT1, vex::gearSetting::ratio18_1, true); // Param: (P
 motor PULL_MOTOR_2 (vex::PORT2, vex::gearSetting::ratio18_1, false);
 
 
+motor WHEEL_FRONT_LEFT (vex::PORT3, vex::gearSetting::ratio18_1, false);
+motor WHEEL_BACK_LEFT (vex::PORT4, vex::gearSetting::ratio18_1, false);
+motor WHEEL_FRONT_RIGHT (vex::PORT5, vex::gearSetting::ratio18_1, true);
+motor WHEEL_BACK_RIGHT (vex::PORT6, vex::gearSetting::ratio18_1, true);
 
-motor WHEEL_FBMOVEMENT[] = {};
-motor WHEEL_ROTATE_LEFTSET[] = {};
-motor WHEEL_ROTATE_RIGHTSET[] = {};
 motor MOTOR_PULL_BALL[] = {PULL_MOTOR_1, PULL_MOTOR_2};
 
 // Sensors
 triport threeWirePort(PORT22);
-encoder testShaftEncoder = encoder(threeWirePort.A);
-vision testVisionSensor = vision(2);encoder ENCODER_LEFT = encoder(threeWirePort.A);
+encoder ENCODER_LEFT = encoder(threeWirePort.A);
 encoder ENCODER_RIGHT = encoder(threeWirePort.C);
 encoder ENCODER_BACK = encoder(threeWirePort.E);
 
