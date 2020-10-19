@@ -35,9 +35,11 @@ int main(){
   System.status("Shaft encoder should work.");
 
   // Sets Encoder Value Prefix
-  short lengthOfPrefix_ShaftEncoder = System.scctl.setLinePrefix(5, "Shaft Encoder Value: ");
-  short lengthOfPrefix_VisionSensor = System.scctl.setLinePrefix(6, "Vision Sensor Value: ");
-  System.status("Finished setting livedisplay prefix..");
+  short lengthOfPrefix_LeftShaft = System.scctl.setLinePrefix(5, "Left Shaft Encoder Value: ");
+  short lengthOfPrefix_RigthShaft = System.scctl.setLinePrefix(6, "Right Shaft Encoder Value: ");
+  short lengthOfPrefix_BackShaft = System.scctl.setLinePrefix(7, "Back Shaft Encoder Value: ");
+  short lengthOfPrefix_Vision = System.scctl.setLinePrefix(8, "Vision Sensor Value: ");
+  System.status("Finished setting livedisplay prefix.");
 
   // Create vision sensor data
   /* 여기에서 빨간색 인식하게 코드좀 짜줘 */
@@ -45,13 +47,15 @@ int main(){
   int camData[] = {0, 0, 0};
 
   // Keep receives value from Shaft Encoder until motorctl.motorStatus is true.
-  System.status("Starting async task...");
-
-  /* 비동기 (async) 로 async_task 켜지도록 해줘 - vex::thread 라d vex::task 로는 안되더라 */
-
-  while(System.mctl.motorStatus) {
+  while(TERMINATION_SWITCH.value() == 0) {
     // Converts returned shaft encoder value to string and sets the value of line
-    System.scctl.setValueOfLine(5, lengthOfPrefix_ShaftEncoder, System.convertToString(testShaftEncoder.value()));
-    System.scctl.setValueOfLine(6, lengthOfPrefix_VisionSensor, System.convertToString(System.srutil.visionSensor(testVisionSensor, yuvData, 2.0, camData)));
+    System.scctl.setValueOfLine(5, lengthOfPrefix_LeftShaft, System.convertToString(ENCODER_LEFT.value()));
+    System.scctl.setValueOfLine(6, lengthOfPrefix_RigthShaft, System.convertToString(ENCODER_RIGHT.value()));
+    System.scctl.setValueOfLine(7, lengthOfPrefix_BackShaft, System.convertToString(ENCODER_BACK.value()));
+    System.scctl.setValueOfLine(8, lengthOfPrefix_Vision, System.convertToString(System.srutil.visionSensor(testVisionSensor, yuvData, 2.0, camData)));
   }
+
+  System.status("Terminal switch pressed.");
+  System.panic("System reached to end.", 0);
+
 }
