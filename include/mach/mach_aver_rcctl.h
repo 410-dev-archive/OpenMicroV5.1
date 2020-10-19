@@ -82,22 +82,25 @@ public:
   }
 
   void onRelease_wheels() {
+    System.status("RC: All buttons are released.");
     motor allmotors[] = WHEEL_ALL;
     mtctl.stopMotors(allmotors, 4);
   }
 
   void onPress_forward() {
-
+    System.status("RC: Forward pressed.");
     motor allmotors[] = WHEEL_ALL;
     mtctl.runMotors(allmotors, 4, directionType::fwd);
   }
 
   void onPress_backward() {
+    System.status("RC: Backward pressed.");
     motor allmotors[] = WHEEL_ALL;
     mtctl.runMotors(allmotors, 4, directionType::rev);
   }
 
   void onPress_turnLeft() {
+    System.status("RC: Turn Left pressed.");
     motor toRunForward[] = {WHEEL_FRONT_RIGHT, WHEEL_BACK_RIGHT};
     motor toRunBackward[] = {WHEEL_FRONT_LEFT, WHEEL_BACK_LEFT};
     mtctl.runMotors(toRunForward, 2, directionType::fwd);
@@ -105,6 +108,7 @@ public:
   }
 
   void onPress_turnRight() {
+    System.status("RC: Turn Right pressed.");
     motor toRunBackward[] = {WHEEL_FRONT_RIGHT, WHEEL_BACK_RIGHT};
     motor toRunForward[] = {WHEEL_FRONT_LEFT, WHEEL_BACK_LEFT};
     mtctl.runMotors(toRunForward, 2, directionType::fwd);
@@ -112,6 +116,7 @@ public:
   }
 
   void onPress_startPuller() {
+    System.status("RC: Puller pressed.");
     motor pullers[] = {PULL_MOTOR_1, PULL_MOTOR_2};
     mtctl.runMotors(pullers, 2, directionType::fwd);
   }
