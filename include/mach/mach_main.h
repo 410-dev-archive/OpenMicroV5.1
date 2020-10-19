@@ -44,6 +44,12 @@ public:
     scctl.setValueOfLine(loggingLine, 0, "Status: " + logContent);
   }
 
+  void status(string logContent, int customLineNumber) {
+    scctl.clearLine(customLineNumber);
+    log.push_back(logContent);
+    scctl.setValueOfLine(customLineNumber, 0, "Status: " + logContent);
+  }
+
   // Provide panic and stops program
   void panic(string logContent, int exitCode){
     scctl.clearScreen();
