@@ -23,6 +23,7 @@ motor DUMMY(vex::PORT7, vex::gearSetting::ratio18_1, false);
 motor DUMMY2(vex::PORT8, vex::gearSetting::ratio18_1, false);
 
 motor MOTOR_PULL_BALL[] = {PULL_MOTOR_1, PULL_MOTOR_2};
+motor MOTOR_ALL[] = {PULL_MOTOR_1, PULL_MOTOR_2, WHEEL_BACK_LEFT, WHEEL_BACK_RIGHT, WHEEL_FRONT_LEFT, WHEEL_FRONT_RIGHT, DUMMY, DUMMY2};
 
 // Sensors
 triport threeWirePort(PORT22);
