@@ -52,6 +52,7 @@ public:
 
   // Provide panic and stops program
   void panic(string logContent, int exitCode){
+    mctl.stopMotors(MOTOR_ALL, 8);
     scctl.clearScreen();
     scctl.setValueOfLine(1, 0, logContent);
     for(short i = 0; i < log.size(); i++) {
