@@ -48,7 +48,7 @@ public:
   // Set status
   void status(string logContent) {
     scctl.clearLine(loggingLine);
-    if (!runArgument.find("--no-log")) log.push_back(logContent);
+    log.push_back(logContent);
     scctl.setValueOfLine(loggingLine, 0, "Status: " + logContent);
   }
 
@@ -57,7 +57,7 @@ public:
     scctl.clearScreen();
     scctl.setValueOfLine(1, 0, logContent);
     for(short i = 0; i < log.size(); i++) {
-      scctl.setValueOfLine(i + 3, 0, log.at(i));
+      scctl.setValueOfLine(i + 1, 0, log.at(i));
     }
     exit(exitCode);
   }
