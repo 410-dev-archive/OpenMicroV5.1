@@ -21,7 +21,7 @@ using namespace std;
 
 competition Competition;
 controller Controller;
-RSManager System("");
+AESystem System("");
 
 // main
 int main(){

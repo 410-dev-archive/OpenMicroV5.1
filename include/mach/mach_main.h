@@ -11,7 +11,7 @@
 using namespace vex;
 using namespace std;
 
-class RSManager {
+class AESystem {
 public:
 
   // RS Manager required value
@@ -26,13 +26,13 @@ public:
   AEScreenControl scctl;
 
   // Constructor with startup argument
-  RSManager(string startupArgument) {
+  AESystem(string startupArgument) {
     runArgument = startupArgument; // Set arg in private storage
     init();
   }
 
   // Constructor without startup argument
-  RSManager() {
+  AESystem() {
     init();
   }
 
