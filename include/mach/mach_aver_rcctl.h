@@ -23,10 +23,10 @@ using namespace std;
 class AERemoteControl {
 public:
   AESensorsUtility aeutils;
-  int buttonR1, buttonR2, buttonL1, buttonL2;
-  int buttonX, buttonY, buttonA, buttonB;
-  int buttonUp, buttonDown, buttonRight, buttonLeft;
-  int ax1, ax2, ax3, ax4;
+  bool buttonR1, buttonR2, buttonL1, buttonL2;
+  bool buttonX, buttonY, buttonA, buttonB;
+  bool buttonUp, buttonDown, buttonRight, buttonLeft;
+  int32_t ax1, ax2, ax3, ax4;
   int encLeft, encRight, encBack;
 
 	void updateAll(controller Controller) {
