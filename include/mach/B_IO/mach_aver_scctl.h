@@ -14,6 +14,11 @@ using namespace std;
 
 class AEScreenControl {
 public:
+  bool showOutput = true;
+
+  AEScreenControl(string arg) {
+    if(arg.find("--no-output") < 100000) showOutput = false;
+  }
 
   // Initializes screen
   void init() {
@@ -22,20 +27,26 @@ public:
 
   // Should be used as labeling data
   short setLinePrefix(int lineNumber, string text) {
-    Brain.Screen.clearLine(lineNumber, color::black);
-    Brain.Screen.setCursor(lineNumber, 0);
-    const char *toPrint = text.c_str();
-    Brain.Screen.print(toPrint);
-    Brain.Screen.render();
-    return (short) text.length();
+    if (showOutput) {
+      Brain.Screen.clearLine(lineNumber, color::black);
+      Brain.Screen.setCursor(lineNumber, 0);
+      const char *toPrint = text.c_str();
+      Brain.Screen.print(toPrint);
+      Brain.Screen.render();
+      return (short) text.length();
+    }else{
+      return 0;
+    }
   }
 
   // Set value of line, could be use as setting the entire line or after the data label
   void setValueOfLine(short lineNumber, short prefixLength, string text) {
-    Brain.Screen.setCursor(lineNumber, prefixLength);
-    const char *toPrint = text.c_str();
-    Brain.Screen.print(toPrint);
-    Brain.Screen.render();
+    if (showOutput) {
+      Brain.Screen.setCursor(lineNumber, prefixLength);
+      const char *toPrint = text.c_str();
+      Brain.Screen.print(toPrint);
+      Brain.Screen.render();
+    }
   }
 
   // Clears specified line

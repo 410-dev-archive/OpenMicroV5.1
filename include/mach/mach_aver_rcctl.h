@@ -15,6 +15,8 @@ private:
   AEMotorControl mtctl;
   AESensorsUtility srutil;
 
+  bool liveControl = false;
+
   string toString(int data) {
     std::ostringstream strstream;
     strstream << data;
@@ -34,10 +36,16 @@ public:
   string FWD = "";
   string LFT = "";
 
+  AERemoteControl(string arg) {
+    if (arg.find("--livecontrol") < 100000) liveControl = true;
+  }
+
 	void updateAll(controller Controller) {
-    encLeft.at(encLeft.size() - 1) = srutil.getShaftEncoderValue(ENCODER_LEFT);
-    encRight.at(encRight.size() - 1) = srutil.getShaftEncoderValue(ENCODER_RIGHT);
-    encBack.at(encBack.size() - 1) = srutil.getShaftEncoderValue(ENCODER_BACK);
+    if (!liveControl) {
+      encLeft.at(encLeft.size() - 1) = srutil.getShaftEncoderValue(ENCODER_LEFT);
+      encRight.at(encRight.size() - 1) = srutil.getShaftEncoderValue(ENCODER_RIGHT);
+      encBack.at(encBack.size() - 1) = srutil.getShaftEncoderValue(ENCODER_BACK);
+    }
 
     FWD = toString(Controller.Axis3.value());
     LFT = toString(Controller.Axis4.value());
@@ -65,7 +73,7 @@ public:
   }
 
   void onRelease_wheels() {
-    if(actionUpdate) addIndex();
+    if(actionUpdate && !liveControl) addIndex();
     recentActivity = "REMOTE: RELEASED";
     motor allmotors[] = {WHEEL_FRONT_LEFT,WHEEL_BACK_RIGHT,WHEEL_BACK_LEFT,WHEEL_FRONT_RIGHT};
     mtctl.stopMotors(allmotors, 4);
