@@ -3,7 +3,7 @@
         {
             "name": "Mac",
             "includePath": [
-                "${workspaceFolder}/../**",
+                "${workspaceFolder}/../../**",
                 "/Applications/VEXcode Pro V5.app/Contents/Resources/sdk/vexv5/include"
             ],
             "defines": [],

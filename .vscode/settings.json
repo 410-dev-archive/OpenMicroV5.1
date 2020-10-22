@@ -5,6 +5,10 @@
         "istream": "cpp",
         "vector": "cpp",
         "string": "cpp",
-        "filesystem": "cpp"
+        "filesystem": "cpp",
+        "algorithm": "cpp",
+        "__node_handle": "cpp",
+        "optional": "cpp",
+        "system_error": "cpp"
     }
 }
