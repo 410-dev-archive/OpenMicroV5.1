@@ -1,8 +1,9 @@
 #include "vex.h"
-#include "mach/mach_aver_fctl.h"
+// #include "mach/mach_aver_fctl.h"
 #include "mach/mach_aver_scctl.h"
-#include "mach/mach_aver_srutil.h"
-#include "mach/mach_aver_mtctl.h"
+// #include "mach/mach_aver_srutil.h"
+// #include "mach/mach_aver_mtctl.h"
+#include "mach/mach_aver_rcctl.h"
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -19,10 +20,11 @@ public:
   vector<string> log{};
 
   // Able to access from other components
-  AEFileControl fctl;
+  // AEFileControl fctl;
   AEMotorControl mctl;
-  AESensorsUtility srutil;
+  // AESensorsUtility srutil;
   AEScreenControl scctl;
+  AERemoteControl rcctl;
 
   // Constructor
   AESystem(string nd) {

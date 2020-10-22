@@ -12,21 +12,20 @@ VEX V5 Brain Remote Controller
 
 #include <fstream>
 #include <iostream>
+#include <sstream>
 
 #include "hardwareinfo.h"
 #include "mach/mach_aver_srutil.h"
 #include "mach/mach_aver_mtctl.h"
-#include "mach/mach_main.h"
+ #include "mach/mach_aver_scctl.h"
 
 using namespace vex;
 using namespace std;
 
-#define WHEEL_ALL {WHEEL_FRONT_LEFT,WHEEL_FRONT_RIGHT,WHEEL_BACK_LEFT,WHEEL_FRONT_RIGHT}
-
 class AERemoteControl {
 public:
   AEMotorControl mtctl;
-  AESystem System;
+ AEScreenControl scctl;
   AESensorsUtility srutil;
   // bool buttonR1, buttonR2, buttonL1, buttonL2;
   // bool buttonX, buttonY, buttonA, buttonB;
@@ -36,6 +35,8 @@ public:
   vector<int> encLeft = {0};
   vector<int> encRight = {0};
   vector<int> encBack = {0};
+
+  u_long test = 0;
 
 	void updateAll(controller Controller) {
     encLeft.at(encLeft.size() - 1) = srutil.getShaftEncoderValue(ENCODER_LEFT);
@@ -68,8 +69,10 @@ public:
       onRelease_wheels();
       onRelease_puller();
     }
-
     if (Controller.ButtonA.pressing()) onPress_systemTerminate();
+    std::ostringstream strstream;
+    strstream << test;
+    cout << "RemoteController Signal updated - COUNT=" + strstream.str();
   }
 
   void addIndex() {
@@ -82,25 +85,25 @@ public:
   }
 
   void onRelease_wheels() {
-    System.status("RC: All buttons are released.");
-    motor allmotors[] = WHEEL_ALL;
+    scctl.setValueOfLine(10, 0, "RC: All buttons are released.");
+    motor allmotors[] = {WHEEL_FRONT_LEFT,WHEEL_BACK_RIGHT,WHEEL_BACK_LEFT,WHEEL_FRONT_RIGHT};
     mtctl.stopMotors(allmotors, 4);
   }
 
   void onPress_forward() {
-    System.status("RC: Forward pressed.");
-    motor allmotors[] = WHEEL_ALL;
+    scctl.setValueOfLine(10, 0, "RC: Forward pressed.");
+    motor allmotors[] = {WHEEL_FRONT_LEFT,WHEEL_BACK_RIGHT,WHEEL_BACK_LEFT,WHEEL_FRONT_RIGHT};
     mtctl.runMotors(allmotors, 4, directionType::fwd);
   }
 
   void onPress_backward() {
-    System.status("RC: Backward pressed.");
-    motor allmotors[] = WHEEL_ALL;
+    scctl.setValueOfLine(10, 0, "RC: Backward pressed.");
+    motor allmotors[] = {WHEEL_FRONT_LEFT,WHEEL_BACK_RIGHT,WHEEL_BACK_LEFT,WHEEL_FRONT_RIGHT};
     mtctl.runMotors(allmotors, 4, directionType::rev);
   }
 
   void onPress_turnLeft() {
-    System.status("RC: Turn Left pressed.");
+    scctl.setValueOfLine(10, 0, "RC: Turn Left pressed.");
     motor toRunForward[] = {WHEEL_FRONT_RIGHT, WHEEL_BACK_RIGHT};
     motor toRunBackward[] = {WHEEL_FRONT_LEFT, WHEEL_BACK_LEFT};
     mtctl.runMotors(toRunForward, 2, directionType::fwd);
@@ -108,7 +111,7 @@ public:
   }
 
   void onPress_turnRight() {
-    System.status("RC: Turn Right pressed.");
+    scctl.setValueOfLine(10, 0, "RC: Turn Right pressed.");
     motor toRunBackward[] = {WHEEL_FRONT_RIGHT, WHEEL_BACK_RIGHT};
     motor toRunForward[] = {WHEEL_FRONT_LEFT, WHEEL_BACK_LEFT};
     mtctl.runMotors(toRunForward, 2, directionType::fwd);
@@ -116,7 +119,7 @@ public:
   }
 
   void onPress_startPuller() {
-    System.status("RC: Puller pressed.");
+    scctl.setValueOfLine(10, 0, "RC: Puller pressed.");
     motor pullers[] = {PULL_MOTOR_1, PULL_MOTOR_2};
     mtctl.runMotors(pullers, 2, directionType::fwd);
   }
@@ -127,6 +130,9 @@ public:
   }
 
   void onPress_systemTerminate() {
-    System.panic("System terminated.", 0);
+    mtctl.stopMotors(MOTOR_ALL, 8);
+    // scctl.clearScreen();
+    // scctl.setValueOfLine(1, 0, "System stopped.");
+    exit(0);
   }
 };

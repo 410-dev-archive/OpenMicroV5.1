@@ -12,7 +12,7 @@
 
 #include "vex.h"
 
-#include "hardwareinfo.h"
+//#include "hardwareinfo.h"
 
 #include "mach/mach_main.h"
 
@@ -27,11 +27,7 @@ AESystem System("");
 int main(){
   // Launches Resource Manager
   System.init();
-  // vex::thread newTask(motorCall); // Motor Async Run
-
   System.status("Started motor!");
-  System.mctl.runSingleMotor(PULL_MOTOR_1, directionType::fwd);
-  System.mctl.runSingleMotor(PULL_MOTOR_2, directionType::fwd);
   System.status("Shaft encoder should work.");
 
   // Sets Encoder Value Prefix
@@ -52,7 +48,8 @@ int main(){
     System.scctl.setValueOfLine(5, lengthOfPrefix_LeftShaft, System.convertToString(ENCODER_LEFT.value()));
     System.scctl.setValueOfLine(6, lengthOfPrefix_RigthShaft, System.convertToString(ENCODER_RIGHT.value()));
     System.scctl.setValueOfLine(7, lengthOfPrefix_BackShaft, System.convertToString(ENCODER_BACK.value()));
-    System.scctl.setValueOfLine(8, lengthOfPrefix_Vision, System.convertToString(System.srutil.visionSensor(testVisionSensor, yuvData, 2.0, camData)));
+    // System.scctl.setValueOfLine(8, lengthOfPrefix_Vision, System.convertToString(System.srutil.visionSensor(testVisionSensor, yuvData, 2.0, camData)));
+    System.rcctl.updateAll(Controller);
   }
 
   System.status("Terminal switch pressed.");
