@@ -12,47 +12,58 @@
 
 #include "vex.h"
 
-//#include "hardwareinfo.h"
 
-#include "mach/mach_main.h"
+#include "mach/B_IO/mach_aver_scctl.h"
+#include "mach/mach_aver_rcctl.h"
 
 using namespace vex;
 using namespace std;
 
 competition Competition;
 controller Controller;
-AESystem System("");
+
+AEScreenControl scctl;
+AERemoteControl rcctl;
 
 // main
+
+string toString(int data) {
+  std::ostringstream strstream;
+  strstream << data;
+  return strstream.str();
+}
+
 int main(){
-  // Launches Resource Manager
-  System.init();
-  System.status("Started motor!");
-  System.status("Shaft encoder should work.");
+  // Shows title screen
+  scctl.setValueOfLine(1, 0, "Team AVER - Mach System 2020 - 1.0 Beta 1");
+  scctl.setValueOfLine(2, 0, "=========================================");
+
 
   // Sets Encoder Value Prefix
-  short lengthOfPrefix_LeftShaft = System.scctl.setLinePrefix(5, "Left Shaft Encoder Value: ");
-  short lengthOfPrefix_RigthShaft = System.scctl.setLinePrefix(6, "Right Shaft Encoder Value: ");
-  short lengthOfPrefix_BackShaft = System.scctl.setLinePrefix(7, "Back Shaft Encoder Value: ");
-  short lengthOfPrefix_Vision = System.scctl.setLinePrefix(8, "Vision Sensor Value: ");
-  System.status("Finished setting livedisplay prefix.");
-
-  // Create vision sensor data
-  /* 여기에서 빨간색 인식하게 코드좀 짜줘 */
-  int yuvData[] = {0, 0, 10, 5, 0, 100, 50, 0, 50};
-  int camData[] = {0, 0, 0};
+  short lengthOfPrefix_LeftShaft = scctl.setLinePrefix(3, "Left Shaft Encoder Value: ");
+  short lengthOfPrefix_RigthShaft = scctl.setLinePrefix(4, "Right Shaft Encoder Value: ");
+  short lengthOfPrefix_BackShaft = scctl.setLinePrefix(5, "Back Shaft Encoder Value: ");
 
   // Keep receives value from Shaft Encoder until motorctl.motorStatus is true.
-  while(TERMINATION_SWITCH.value() == 0) {
+  while(TERMINATION_SWITCH.value() == 0 && !Controller.ButtonA.pressing()) {
+    rcctl.updateAll(Controller);
+    
     // Converts returned shaft encoder value to string and sets the value of line
-    System.scctl.setValueOfLine(5, lengthOfPrefix_LeftShaft, System.convertToString(ENCODER_LEFT.value()));
-    System.scctl.setValueOfLine(6, lengthOfPrefix_RigthShaft, System.convertToString(ENCODER_RIGHT.value()));
-    System.scctl.setValueOfLine(7, lengthOfPrefix_BackShaft, System.convertToString(ENCODER_BACK.value()));
-    // System.scctl.setValueOfLine(8, lengthOfPrefix_Vision, System.convertToString(System.srutil.visionSensor(testVisionSensor, yuvData, 2.0, camData)));
-    System.rcctl.updateAll(Controller);
+    scctl.setValueOfLine(3, lengthOfPrefix_LeftShaft, toString(ENCODER_LEFT.value()));
+    scctl.setValueOfLine(4, lengthOfPrefix_RigthShaft, toString(ENCODER_RIGHT.value()));
+    scctl.setValueOfLine(5, lengthOfPrefix_BackShaft, toString(ENCODER_BACK.value()));
+    scctl.setValueOfLine(6, 0, rcctl.recentActivity + "           ");
+    scctl.setValueOfLine(7, 0, "Forward / Backward: " + rcctl.FWD + "       ");
+    scctl.setValueOfLine(8, 0, "Left / Right      : " + rcctl.LFT + "       ");
+    scctl.setValueOfLine(9, 0, "Encoder 1 Stored: " + toString(rcctl.encLeft.size()) + ", " + toString(rcctl.encLeft.at(rcctl.encLeft.size() - 2)));
+    scctl.setValueOfLine(10, 0, "Encoder 2 Stored: " + toString(rcctl.encRight.size()) + ", " + toString(rcctl.encRight.at(rcctl.encRight.size() - 2)));
+    scctl.setValueOfLine(11, 0, "Encoder 3 Stored: " + toString(rcctl.encBack.size()) + ", " + toString(rcctl.encBack.at(rcctl.encBack.size() - 2)));
   }
-
-  System.status("Terminal switch pressed.");
-  System.panic("System reached to end.", 0);
-
+  
+  scctl.clearScreen();
+  scctl.setValueOfLine(1, 0, "[*] Shutdown signal detected.");
+  scctl.setValueOfLine(2, 0, "[*] Sensor update stopped...");
+  scctl.setValueOfLine(3, 0, "[*] Main thread stopped...");
+  scctl.setValueOfLine(4, 0, "[*] Goodbye.");
+  exit(0);
 }
