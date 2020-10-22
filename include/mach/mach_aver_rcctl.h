@@ -15,8 +15,6 @@ private:
   AEMotorControl mtctl;
   AESensorsUtility srutil;
 
-  bool liveControl = false;
-
   string toString(int data) {
     std::ostringstream strstream;
     strstream << data;
@@ -31,6 +29,7 @@ public:
   vector<int> encBack = {0, 0};
 
   bool actionUpdate = false;
+  bool liveControl = false;
 
   string recentActivity = "";
   string FWD = "";
