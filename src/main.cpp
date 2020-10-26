@@ -15,6 +15,7 @@
 
 #include "mach/B_IO/mach_aver_scctl.h"
 #include "mach/mach_aver_rcctl.h"
+#include "mach/B_IO/mach_aver_fctl.h"
 
 using namespace vex;
 using namespace std;
@@ -49,11 +50,11 @@ void minimalStart() {
   Brain.Screen.render();
 }
 
-int main(){
+void realSoftware() {
   // minimalStart();
   // Shows title screen
-  scctl.setValueOfLine(1, 0, "Team AVER - Mach System 2020 - 1.0 Beta 2");
-  scctl.setValueOfLine(2, 0, "=========================================");
+  scctl.setValueOfLine(1, 0, "  Team AVER - MachMO System 2020 - 1.0 Beta 3");
+  scctl.setValueOfLine(2, 0, "===============================================");
 
 
   // Sets Encoder Value Prefix
@@ -83,4 +84,14 @@ int main(){
   scctl.setValueOfLine(3, 0, "[*] Main thread stopped...");
   scctl.setValueOfLine(4, 0, "[*] Goodbye.");
   exit(0);
+}
+
+int main(){
+  // realSoftware();
+  AEFileControl fctl;
+  fctl.saveString("Hello", "Hello World");
+  if (fctl.doesFileExists("Hello")) scctl.setValueOfLine(1, 0, "File saved");
+  else scctl.setValueOfLine(1, 0, "Not exist");
+
+  scctl.setValueOfLine(2, 0, fctl.loadString("Hello"));
 }
