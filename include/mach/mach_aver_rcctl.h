@@ -35,6 +35,8 @@ public:
   string FWD = "";
   string LFT = "";
 
+  float speed = 1;
+
   AERemoteControl(string arg) {
     if (arg.find("--livecontrol") < 100000) liveControl = true;
   }
@@ -82,14 +84,14 @@ public:
     if(!actionUpdate) actionUpdate = true;
     recentActivity = "REMOTE: FORWARD";
     motor allmotors[] = {WHEEL_FRONT_LEFT,WHEEL_BACK_RIGHT,WHEEL_BACK_LEFT,WHEEL_FRONT_RIGHT};
-    mtctl.runMotors(allmotors, 4, directionType::fwd);
+    mtctl.runMotors(allmotors, 4, directionType::fwd, speed);
   }
 
   void onPress_backward() {
     if(!actionUpdate) actionUpdate = true;
     recentActivity = "REMOTE: BACKWARD";
     motor allmotors[] = {WHEEL_FRONT_LEFT,WHEEL_BACK_RIGHT,WHEEL_BACK_LEFT,WHEEL_FRONT_RIGHT};
-    mtctl.runMotors(allmotors, 4, directionType::rev);
+    mtctl.runMotors(allmotors, 4, directionType::rev, speed);
   }
 
   void onPress_turnLeft() {
@@ -97,8 +99,8 @@ public:
     recentActivity = "REMOTE: LEFT";
     motor toRunForward[] = {WHEEL_FRONT_RIGHT, WHEEL_BACK_RIGHT};
     motor toRunBackward[] = {WHEEL_FRONT_LEFT, WHEEL_BACK_LEFT};
-    mtctl.runMotors(toRunForward, 2, directionType::fwd);
-    mtctl.runMotors(toRunBackward, 2, directionType::rev);
+    mtctl.runMotors(toRunForward, 2, directionType::fwd, 1);
+    mtctl.runMotors(toRunBackward, 2, directionType::rev, 1);
   }
 
   void onPress_turnRight() {
@@ -106,15 +108,15 @@ public:
     recentActivity = "REMOTE: RIGHT";
     motor toRunBackward[] = {WHEEL_FRONT_RIGHT, WHEEL_BACK_RIGHT};
     motor toRunForward[] = {WHEEL_FRONT_LEFT, WHEEL_BACK_LEFT};
-    mtctl.runMotors(toRunForward, 2, directionType::fwd);
-    mtctl.runMotors(toRunBackward, 2, directionType::rev);
+    mtctl.runMotors(toRunForward, 2, directionType::fwd, 1);
+    mtctl.runMotors(toRunBackward, 2, directionType::rev, 1);
   }
 
   void onPress_startPuller() {
     if(!actionUpdate) actionUpdate = true;
     recentActivity = "REMOTE: PULL";
     motor pullers[] = {PULL_MOTOR_1, PULL_MOTOR_2};
-    mtctl.runMotors(pullers, 2, directionType::fwd);
+    mtctl.runMotors(pullers, 2, directionType::fwd, 1);
   }
 
   void onRelease_puller() {

@@ -18,7 +18,7 @@ public:
   controller ctl = controller();
   bool motorStatus = false;
 
-	int runMotors(motor motorObjects[], int motorCount, directionType direction) {
+	int runMotors(motor motorObjects[], int motorCount, directionType direction, float speed) {
 		try{
       		motorStatus = true;
 			for(int indexOfObjects = 0; indexOfObjects < motorCount; indexOfObjects++) {
