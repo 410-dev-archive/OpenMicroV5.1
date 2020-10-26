@@ -22,7 +22,7 @@ public:
 		try{
       		motorStatus = true;
 			for(int indexOfObjects = 0; indexOfObjects < motorCount; indexOfObjects++) {
-				motorObjects[indexOfObjects].spin(direction);
+				motorObjects[indexOfObjects].spin(direction, (double)speed, velocityUnits::pct);
 			}
 			return 0;
 		}catch(exception e) {
@@ -30,10 +30,10 @@ public:
 		}
 	}
 
-  int runSingleMotor(motor motorObject, directionType direction) {
+  int runSingleMotor(motor motorObject, directionType direction, float speed) {
     try{
     	motorStatus = true;
-    	motorObject.spin(direction);
+    	motorObject.spin(direction, (double)speed, velocityUnits::pct);
 		return 0;
 	}catch(exception e) {
 		return 1;

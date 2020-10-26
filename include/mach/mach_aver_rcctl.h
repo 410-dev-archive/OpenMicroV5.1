@@ -30,12 +30,13 @@ public:
 
   bool actionUpdate = false;
   bool liveControl = false;
+  float multiplier = 1.0;
 
   string recentActivity = "";
   string FWD = "";
   string LFT = "";
 
-  float speed = 1;
+  float speed = 25.0;
 
   AERemoteControl(string arg) {
     if (arg.find("--livecontrol") < 100000) liveControl = true;
@@ -50,6 +51,9 @@ public:
 
     FWD = toString(Controller.Axis3.value());
     LFT = toString(Controller.Axis4.value());
+
+    if (Controller.ButtonL1.pressing()) multiplier = 2;
+    if (Controller.ButtonL2.pressing()) multiplier = 4;
 
     if (Controller.ButtonUp.pressing() || Controller.Axis3.value() > 120) onPress_forward();
     else if (Controller.ButtonDown.pressing() || Controller.Axis3.value() < -120) onPress_backward();
@@ -84,14 +88,14 @@ public:
     if(!actionUpdate) actionUpdate = true;
     recentActivity = "REMOTE: FORWARD";
     motor allmotors[] = {WHEEL_FRONT_LEFT,WHEEL_BACK_RIGHT,WHEEL_BACK_LEFT,WHEEL_FRONT_RIGHT};
-    mtctl.runMotors(allmotors, 4, directionType::fwd, speed);
+    mtctl.runMotors(allmotors, 4, directionType::fwd, speed*multiplier);
   }
 
   void onPress_backward() {
     if(!actionUpdate) actionUpdate = true;
     recentActivity = "REMOTE: BACKWARD";
     motor allmotors[] = {WHEEL_FRONT_LEFT,WHEEL_BACK_RIGHT,WHEEL_BACK_LEFT,WHEEL_FRONT_RIGHT};
-    mtctl.runMotors(allmotors, 4, directionType::rev, speed);
+    mtctl.runMotors(allmotors, 4, directionType::rev, speed*multiplier);
   }
 
   void onPress_turnLeft() {
@@ -99,8 +103,8 @@ public:
     recentActivity = "REMOTE: LEFT";
     motor toRunForward[] = {WHEEL_FRONT_RIGHT, WHEEL_BACK_RIGHT};
     motor toRunBackward[] = {WHEEL_FRONT_LEFT, WHEEL_BACK_LEFT};
-    mtctl.runMotors(toRunForward, 2, directionType::fwd, 1);
-    mtctl.runMotors(toRunBackward, 2, directionType::rev, 1);
+    mtctl.runMotors(toRunForward, 2, directionType::fwd, speed*multiplier);
+    mtctl.runMotors(toRunBackward, 2, directionType::rev, speed*multiplier);
   }
 
   void onPress_turnRight() {
@@ -108,15 +112,15 @@ public:
     recentActivity = "REMOTE: RIGHT";
     motor toRunBackward[] = {WHEEL_FRONT_RIGHT, WHEEL_BACK_RIGHT};
     motor toRunForward[] = {WHEEL_FRONT_LEFT, WHEEL_BACK_LEFT};
-    mtctl.runMotors(toRunForward, 2, directionType::fwd, 1);
-    mtctl.runMotors(toRunBackward, 2, directionType::rev, 1);
+    mtctl.runMotors(toRunForward, 2, directionType::fwd, speed*multiplier);
+    mtctl.runMotors(toRunBackward, 2, directionType::rev, speed*multiplier);
   }
 
   void onPress_startPuller() {
     if(!actionUpdate) actionUpdate = true;
     recentActivity = "REMOTE: PULL";
     motor pullers[] = {PULL_MOTOR_1, PULL_MOTOR_2};
-    mtctl.runMotors(pullers, 2, directionType::fwd, 1);
+    mtctl.runMotors(pullers, 2, directionType::fwd, speed*multiplier);
   }
 
   void onRelease_puller() {
