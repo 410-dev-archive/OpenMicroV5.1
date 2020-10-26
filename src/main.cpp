@@ -88,10 +88,5 @@ void realSoftware() {
 
 int main(){
   // realSoftware();
-  AEFileControl fctl;
-  fctl.saveString("Hello", "Hello World");
-  if (fctl.doesFileExists("Hello")) scctl.setValueOfLine(1, 0, "File saved");
-  else scctl.setValueOfLine(1, 0, "Not exist");
-
-  scctl.setValueOfLine(2, 0, fctl.loadString("Hello"));
+  
 }
