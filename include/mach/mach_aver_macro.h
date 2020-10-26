@@ -33,5 +33,20 @@ public:
 
 	}
 
+  vector<string> splitStr(string s, string del) {
+    size_t p_st = 0, p_end, delim_len = del.length();
+    string tkn;
+    vector<string> tkns;
+
+    while((p_end = s.find(del, p_st)) != string::npos) {
+      tkn = s.substr(p_st, p_end - p_st);
+      p_st = p_end + delim_len;
+      tkns.push_back(tkn);
+    }
+    tkns.push_back(s.substr(p_st));
+    return tkns;
+
+  }
+
 
 };
