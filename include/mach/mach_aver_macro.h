@@ -36,6 +36,18 @@ public:
     loadedMacro_action = splitStr(macroFileControl.loadString(loadedMacro_action_name), " ");
     loadedMacro_time = splitStr(macroFileControl.loadString(loadedMacro_time_name), " ");
 
+    auto curAction = loadedMacro_action.begin();
+    auto curTime = loadedMacro_time.begin();
+
+    while(curAction != loadedMacro_action.end() || curTime != loadedMacro_time.end()){
+      if(curAction != loadedMacro_action.end()){
+        ++curAction;
+      }
+      if(curTime != loadedMacro_time.end()){
+        ++curTime;
+      }
+    }
+
 	}
 
   void recordMacro() {
@@ -43,21 +55,7 @@ public:
     encRight = rcctl.encRight;
     encBack = rcctl.encBack;
 
-    auto curLeft = encLeft.begin();
-    auto curRight = encRight.begin();
-    auto curBack = encBack.begin();
-
-    while(curLeft != encLeft.end() || curRight != encRight.end() || curBack != encBack.end()){
-      if(curLeft != encLeft.end()){
-        ++curLeft;
-      }
-      if(curRight != encRight.end()){
-        ++curRight;
-      }
-      if(curBack != encBack.end()){
-        ++curBack;
-      }
-    }
+    
 
   }
 
