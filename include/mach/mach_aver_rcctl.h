@@ -52,13 +52,14 @@ public:
     FWD = toString(Controller.Axis3.value());
     LFT = toString(Controller.Axis4.value());
 
-    if (Controller.ButtonL1.pressing()) multiplier = 2;
-    if (Controller.ButtonL2.pressing()) multiplier = 4;
+    multiplier = 1.0;
+    if (Controller.ButtonL1.pressing()) multiplier = 2.0;
+    if (Controller.ButtonL2.pressing()) multiplier = 4.0;
 
     if (Controller.ButtonUp.pressing() || Controller.Axis3.value() > 120) onPress_forward();
     else if (Controller.ButtonDown.pressing() || Controller.Axis3.value() < -120) onPress_backward();
-    else if (Controller.ButtonLeft.pressing() || Controller.Axis4.value() < -120) onPress_turnLeft();
-    else if (Controller.ButtonRight.pressing() || Controller.Axis4.value() > 120) onPress_turnRight();
+    else if (Controller.ButtonLeft.pressing() || Controller.Axis4.value() < -120 || Controller.Axis1.value() < -120) onPress_turnRight();
+    else if (Controller.ButtonRight.pressing() || Controller.Axis4.value() > 120 || Controller.Axis1.value() > 120) onPress_turnLeft();
     else if (Controller.ButtonX.pressing() || Controller.Axis2.value() > 120) onPress_startPuller();
     else{
       onRelease_wheels();
@@ -88,14 +89,14 @@ public:
     if(!actionUpdate) actionUpdate = true;
     recentActivity = "REMOTE: FORWARD";
     motor allmotors[] = {WHEEL_FRONT_LEFT,WHEEL_BACK_RIGHT,WHEEL_BACK_LEFT,WHEEL_FRONT_RIGHT};
-    mtctl.runMotors(allmotors, 4, directionType::fwd, speed*multiplier);
+    mtctl.runMotors(allmotors, 4, directionType::rev, speed*multiplier);
   }
 
   void onPress_backward() {
     if(!actionUpdate) actionUpdate = true;
     recentActivity = "REMOTE: BACKWARD";
     motor allmotors[] = {WHEEL_FRONT_LEFT,WHEEL_BACK_RIGHT,WHEEL_BACK_LEFT,WHEEL_FRONT_RIGHT};
-    mtctl.runMotors(allmotors, 4, directionType::rev, speed*multiplier);
+    mtctl.runMotors(allmotors, 4, directionType::fwd, speed*multiplier);
   }
 
   void onPress_turnLeft() {
