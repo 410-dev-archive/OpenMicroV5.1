@@ -32,6 +32,16 @@ public:
   vector<int> encRight = {0, 0};
   vector<int> encBack = {0, 0};
 
+
+  void recordMacro() {
+    encLeft = rcctl.encLeft;
+    encRight = rcctl.encRight;
+    encBack = rcctl.encBack;
+
+    
+
+  }
+
 	void loadMacro() {
     loadedMacro_action = splitStr(macroFileControl.loadString(loadedMacro_action_name), " ");
     loadedMacro_time = splitStr(macroFileControl.loadString(loadedMacro_time_name), " ");
@@ -49,15 +59,6 @@ public:
     }
 
 	}
-
-  void recordMacro() {
-    encLeft = rcctl.encLeft;
-    encRight = rcctl.encRight;
-    encBack = rcctl.encBack;
-
-    
-
-  }
 
   vector<string> splitStr(string s, string del) {
     size_t p_st = 0, p_end, delim_len = del.length();
