@@ -16,10 +16,6 @@ class AEScreenControl {
 public:
   bool showOutput = true;
 
-  AEScreenControl(string arg) {
-    if(arg.find("--no-output") < 100000) showOutput = false;
-  }
-
   // Initializes screen
   void init() {
     Brain.Screen.render(true, false);

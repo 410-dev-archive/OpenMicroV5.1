@@ -23,17 +23,6 @@ using namespace std;
 competition Competition;
 controller Controller;
 
-// This is program argument that will used across the system.
-// The usable arguments are:
-// --livecontrol      Macro cannot be recorded. Remote controller will not store encoder value. The performance may be enhanced.
-// --no-output        Output does not show. This only applies to AEScreenControl, therefore manual print will still work.
-
-string arg = ""; 
-
-AEScreenControl scctl(arg);
-AERemoteControl rcctl(arg);
-
-// main
 
 string toString(int data) {
   std::ostringstream strstream;
@@ -41,16 +30,6 @@ string toString(int data) {
   return strstream.str();
 }
 
-void minimalStart() {
-  string text = "Program Argument: " + arg;
-  Brain.Screen.clearLine(1, color::black);
-  Brain.Screen.setCursor(1, 0);
-  const char *toPrint = text.c_str();
-  Brain.Screen.print(toPrint);
-  Brain.Screen.render();
-}
-
-void realSoftware() {
   // minimalStart();
   // Shows title screen
   scctl.setValueOfLine(1, 0, "  Team AVER - MachMO System 2020 - 1.0 Beta 3");

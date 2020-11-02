@@ -26,6 +26,4 @@ encoder ENCODER_LEFT = encoder(threeWirePort.A);
 encoder ENCODER_RIGHT = encoder(threeWirePort.C);
 encoder ENCODER_BACK = encoder(threeWirePort.E);
 
-limit TERMINATION_SWITCH = limit(threeWirePort.G);
-
 vision testVisionSensor = vision(12); // Vision Sensor (port)

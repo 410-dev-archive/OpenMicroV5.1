@@ -38,10 +38,6 @@ public:
 
   float speed = 25.0;
 
-  AERemoteControl(string arg) {
-    if (arg.find("--livecontrol") < 100000) liveControl = true;
-  }
-
 	void updateAll(controller Controller) {
     if (!liveControl) {
       encLeft.at(encLeft.size() - 1) = srutil.getShaftEncoderValue(ENCODER_LEFT);
