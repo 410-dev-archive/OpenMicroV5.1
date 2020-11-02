@@ -16,13 +16,20 @@
 #include "mach/B_IO/mach_aver_scctl.h"
 #include "mach/mach_aver_rcctl.h"
 #include "mach/B_IO/mach_aver_fctl.h"
+#include "mach/mach_aver_macro.h"
 
 using namespace vex;
 using namespace std;
 
+bool shouldImmediatelyExitLoop = false;
+
 competition Competition;
 controller Controller;
 
+AEScreenControl scctl;
+AERemoteControl rcctl;
+AEMacroControl mcctl;
+AEFileControl fctl;
 
 string toString(int data) {
   std::ostringstream strstream;
@@ -30,10 +37,10 @@ string toString(int data) {
   return strstream.str();
 }
 
-  // minimalStart();
+void global(string modeTitle) {
   // Shows title screen
-  scctl.setValueOfLine(1, 0, "  Team AVER - MachMO System 2020 - 1.0 Beta 3");
-  scctl.setValueOfLine(2, 0, "===============================================");
+  scctl.setValueOfLine(1, 0, "  Team AVER - MachMO System 2020 - 1.0 Beta 4");
+  scctl.setValueOfLine(2, 0, modeTitle + "===========================");
 
 
   // Sets Encoder Value Prefix
@@ -42,7 +49,7 @@ string toString(int data) {
   short lengthOfPrefix_BackShaft = scctl.setLinePrefix(5, "Back Shaft Encoder Value: ");
 
   // Keep receives value from Shaft Encoder until motorctl.motorStatus is true.
-  while(TERMINATION_SWITCH.value() == 0 && !Controller.ButtonA.pressing()) {
+  while(!Controller.ButtonA.pressing() && !shouldImmediatelyExitLoop) {
     rcctl.updateAll(Controller);
     
     // Converts returned shaft encoder value to string and sets the value of line
@@ -56,7 +63,10 @@ string toString(int data) {
     scctl.setValueOfLine(10, 0, "Encoder 2 Stored: " + toString(rcctl.encRight.size()) + ", " + toString(rcctl.encRight.at(rcctl.encRight.size() - 2)));
     scctl.setValueOfLine(11, 0, "Encoder 3 Stored: " + toString(rcctl.encBack.size()) + ", " + toString(rcctl.encBack.at(rcctl.encBack.size() - 2)));
   }
-  
+}
+
+void remotemode() {
+  global("REMOTE CONTROL MODE");
   scctl.clearScreen();
   scctl.setValueOfLine(1, 0, "[*] Shutdown signal detected.");
   scctl.setValueOfLine(2, 0, "[*] Sensor update stopped...");
@@ -65,7 +75,52 @@ string toString(int data) {
   exit(0);
 }
 
+void recordMacroSoftware(string fileName) {
+  global("RECORD MACRO MODE");
+  mcctl.recordMacro(rcctl, fileName, fctl);
+  scctl.clearScreen();
+  scctl.setValueOfLine(1, 0, "[*] Record complete in file: " + fileName);
+  scctl.setValueOfLine(2, 0, "[*] Software complete.");
+  rcctl.onPress_systemTerminate();
+  exit(0);
+}
+
+void loadMacroSoftware() {
+  global("MACRO LOAD AUTONOMOUS");
+  mcctl.loadMacro(fctl, "DEMO");
+  scctl.setValueOfLine(5, 0, "[*] End of load macro.");
+  exit(0);
+}
+
+short menu() {
+  scctl.setValueOfLine(1, 0, "  Team AVER - MachMO System 2020 - 1.0 Beta 4");
+  scctl.setValueOfLine(2, 0, " MAIN MENU:");
+  scctl.setValueOfLine(3, 0, "X: Remote Control Only");
+  scctl.setValueOfLine(4, 0, "Y: Record Macro");
+  scctl.setValueOfLine(5, 0, "B: Load Macro");
+  while(true) {
+    if (Controller.ButtonX.pressing()) return 0;
+    else if (Controller.ButtonY.pressing()) return 1;
+    else if (Controller.ButtonB.pressing()) return 2;
+  }
+}
+
 int main(){
-  realSoftware();
-  
+  short output = menu();
+  scctl.clearScreen();
+  switch(output) {
+    case 0:
+      rcctl.liveControl = true;
+      remotemode();
+
+    case 1:
+      rcctl.liveControl = false;
+      recordMacroSoftware("DEMO");
+
+    case 2:
+      loadMacroSoftware();
+
+    default:
+      exit(0);
+  }
 }
