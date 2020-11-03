@@ -1,21 +1,12 @@
-/*----------------------------------------------------------------------------*/
-/*                                                                            */
-/*    Module:       main.cpp                                                  */
-/*    Author:       eric-1                                                    */
-/*    Created:      Thu Sep 24 2020                                           */
-/*    Description:  V5 project                                                */
-/*                                                                            */
-/*----------------------------------------------------------------------------*/
-
 // ---- START VEXCODE CONFIGURED DEVICES ----
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
 #include "vex.h"
 
 
-#include "mach/B_IO/mach_aver_scctl.h"
+#include "mach/BIOS/mach_aver_scctl.h"
 #include "mach/mach_aver_rcctl.h"
-#include "mach/B_IO/mach_aver_fctl.h"
+#include "mach/BIOS/mach_aver_fctl.h"
 #include "mach/mach_aver_macro.h"
 
 using namespace vex;

@@ -4,8 +4,8 @@
 #include <vector>
 
 #include "hardwareinfo.h"
-#include "mach/B_IO/mach_aver_srutil.h"
-#include "mach/B_IO/mach_aver_mtctl.h"
+#include "mach/BIOS/mach_aver_srutil.h"
+#include "mach/BIOS/mach_aver_mtctl.h"
 
 using namespace vex;
 using namespace std;
