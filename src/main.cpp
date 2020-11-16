@@ -76,9 +76,9 @@ void recordMacroSoftware(string fileName) {
   exit(0);
 }
 
-void loadMacroSoftware() {
   global("MACRO LOAD AUTONOMOUS");
-  mcctl.loadMacro(fctl, "DEMO");
+void loadMacroSoftware(string fileName) {
+  mcctl.loadMacro(scctl, fctl, fileName);
   scctl.setValueOfLine(5, 0, "[*] End of load macro.");
   exit(0);
 }
@@ -109,7 +109,7 @@ int main(){
       recordMacroSoftware("DEMO");
 
     case 2:
-      loadMacroSoftware();
+      loadMacroSoftware("DEMO");
 
     default:
       exit(0);
