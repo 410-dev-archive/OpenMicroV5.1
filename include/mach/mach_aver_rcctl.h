@@ -26,7 +26,7 @@ public:
   // vector<int> masterTimeline = {0}; // 1 = left, 2 = right, 3 = back
   vector<int> encLeft = {0, 0};
   vector<int> encRight = {0, 0};
-  vector<int> encBack = {0, 0};
+  vector<int> encSide = {0, 0};
 
   bool actionUpdate = false;
   bool liveControl = false;
@@ -42,7 +42,7 @@ public:
     if (!liveControl) {
       encLeft.at(encLeft.size() - 1) = srutil.getShaftEncoderValue(ENCODER_LEFT);
       encRight.at(encRight.size() - 1) = srutil.getShaftEncoderValue(ENCODER_RIGHT);
-      encBack.at(encBack.size() - 1) = srutil.getShaftEncoderValue(ENCODER_BACK);
+      encSide.at(encSide.size() - 1) = srutil.getShaftEncoderValue(ENCODER_SIDE);
     }
 
     FWD = toString(Controller.Axis3.value());
@@ -67,10 +67,10 @@ public:
   void addIndex() {
     encLeft.push_back(0);
     encRight.push_back(0);
-    encBack.push_back(0);
+    encSide.push_back(0);
     srutil.resetShaftEncoderValue(ENCODER_LEFT);
     srutil.resetShaftEncoderValue(ENCODER_RIGHT);
-    srutil.resetShaftEncoderValue(ENCODER_BACK);
+    srutil.resetShaftEncoderValue(ENCODER_SIDE);
     actionUpdate = false;
   }
 

@@ -24,6 +24,6 @@ motor MOTOR_PULLER_ALL[] = {PULL_MOTOR_1, PULL_MOTOR_2};
 triport threeWirePort(PORT22);
 encoder ENCODER_LEFT = encoder(threeWirePort.A);
 encoder ENCODER_RIGHT = encoder(threeWirePort.C);
-encoder ENCODER_BACK = encoder(threeWirePort.E);
+encoder ENCODER_SIDE = encoder(threeWirePort.E);
 
 vision testVisionSensor = vision(12); // Vision Sensor (port)

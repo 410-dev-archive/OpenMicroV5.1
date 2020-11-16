@@ -37,7 +37,7 @@ void global(string modeTitle) {
   // Sets Encoder Value Prefix
   short lengthOfPrefix_LeftShaft = scctl.setLinePrefix(3, "Left Shaft Encoder Value: ");
   short lengthOfPrefix_RigthShaft = scctl.setLinePrefix(4, "Right Shaft Encoder Value: ");
-  short lengthOfPrefix_BackShaft = scctl.setLinePrefix(5, "Back Shaft Encoder Value: ");
+  short lengthOfPrefix_SideShaft = scctl.setLinePrefix(5, "Back Shaft Encoder Value: ");
 
   // Keep receives value from Shaft Encoder until motorctl.motorStatus is true.
   while(!Controller.ButtonA.pressing() && !shouldImmediatelyExitLoop) {
@@ -46,13 +46,13 @@ void global(string modeTitle) {
     // Converts returned shaft encoder value to string and sets the value of line
     scctl.setValueOfLine(3, lengthOfPrefix_LeftShaft, toString(ENCODER_LEFT.value()));
     scctl.setValueOfLine(4, lengthOfPrefix_RigthShaft, toString(ENCODER_RIGHT.value()));
-    scctl.setValueOfLine(5, lengthOfPrefix_BackShaft, toString(ENCODER_BACK.value()));
+    scctl.setValueOfLine(5, lengthOfPrefix_SideShaft, toString(ENCODER_SIDE.value()));
     scctl.setValueOfLine(6, 0, rcctl.recentActivity + "           ");
     scctl.setValueOfLine(7, 0, "Forward / Backward: " + rcctl.FWD + "       ");
     scctl.setValueOfLine(8, 0, "Left / Right      : " + rcctl.LFT + "       ");
     scctl.setValueOfLine(9, 0, "Encoder 1 Stored: " + toString(rcctl.encLeft.size()) + ", " + toString(rcctl.encLeft.at(rcctl.encLeft.size() - 2)));
     scctl.setValueOfLine(10, 0, "Encoder 2 Stored: " + toString(rcctl.encRight.size()) + ", " + toString(rcctl.encRight.at(rcctl.encRight.size() - 2)));
-    scctl.setValueOfLine(11, 0, "Encoder 3 Stored: " + toString(rcctl.encBack.size()) + ", " + toString(rcctl.encBack.at(rcctl.encBack.size() - 2)));
+    scctl.setValueOfLine(11, 0, "Encoder 3 Stored: " + toString(rcctl.encSide.size()) + ", " + toString(rcctl.encSide.at(rcctl.encSide.size() - 2)));
   }
 }
 
