@@ -7,6 +7,7 @@ VEX V5 Macro Controller
 
 */
 
+#include <stdlib.h>
 #include "vex.h"
 #include <vector>
 #include <string>
@@ -17,8 +18,6 @@ using namespace std;
 
 class AEMacroControl{
 public:
-	string loadedMacro_action_name = ""; // Holds macro identifier
-	string loadedMacro_time_name = ""; // Holds macro identifier
 	vector<int> loadedMacro_left{};
 	vector<int> loadedMacro_right{};
 	vector<int> loadedMacro_side{};
@@ -48,24 +47,48 @@ public:
 	}
 
 	void loadMacro(AEScreenControl scctl, AEFileControl fctl, string loadedMacro_name) {
-		loadedMacro_left = parseFileVector(fctl.loadString(loadedMacro_name + "_enc_Left"), " ", scctl);
-		// loadedMacro_right = parseFileVector(fctl.loadString(loadedMacro_name + "_enc_Right"), " ");
-		// loadedMacro_side = parseFileVector(fctl.loadString(loadedMacro_name + "_enc_Side"), " ");
+		loadedMacro_left = parseFileVector(fctl.loadString(loadedMacro_name + "_enc_Left"), " ");
+		loadedMacro_right = parseFileVector(fctl.loadString(loadedMacro_name + "_enc_Right"), " ");
+		loadedMacro_side = parseFileVector(fctl.loadString(loadedMacro_name + "_enc_Side"), " ");
 
-		int index = 0;
+		AESensorsUtility senutil;
+		AEMotorControl motctl;
+		
+		for (int i = 0; i < loadedMacro_left.size(); i++) {
+			bool motorIsAlreadyRunning = false;
+			short shouldStop = 0;
+			while(shouldStop < 3) {
+				shouldStop = 0;
+				if (!motorIsAlreadyRunning) {
+					if (loadedMacro_left.at(i) > 0) motctl.runMotors(MOTOR_WHEEL_LEFT, 2, vex::forward, 100);
+					if (loadedMacro_left.at(i) < 0) motctl.runMotors(MOTOR_WHEEL_LEFT, 2, vex::reverse, 100);
+					if (loadedMacro_right.at(i) > 0) motctl.runMotors(MOTOR_WHEEL_RIGHT, 2, vex::forward, 100);
+					if (loadedMacro_right.at(i) < 0) motctl.runMotors(MOTOR_WHEEL_RIGHT, 2, vex::reverse, 100);
+					if (loadedMacro_side.at(i) != 0) motctl.runMotors(MOTOR_PULL_BALL, 2, vex::forward, 100);
+				}
 
-		// DEBUG
-		int sum = accumulate(loadedMacro_left.begin(), loadedMacro_left.end(), 0);
-		scctl.setValueOfLine(3, 0, "DATA: " + convertToString(sum));
-		// END DEBUG
+				if (abs(loadedMacro_left.at(i) - senutil.getShaftEncoderValue(ENCODER_LEFT)) < 2) {
+					motctl.stopMotors(MOTOR_WHEEL_LEFT, 2);
+					shouldStop++;
+				}
+				if (abs(loadedMacro_right.at(i) - senutil.getShaftEncoderValue(ENCODER_RIGHT)) < 2) {
+					motctl.stopMotors(MOTOR_WHEEL_RIGHT, 2); 
+					shouldStop++;
+				}
+				if (abs(loadedMacro_side.at(i) - senutil.getShaftEncoderValue(ENCODER_SIDE)) < 2) {
+					motctl.stopMotors(MOTOR_PULL_BALL, 2);
+					shouldStop++;
+				}
 
+			}
+		}
 	}
 
 	int returnAsInteger(string s) {
 		return atoi(s.c_str());
 	}
 
- 	vector<int> parseFileVector(string s, string separator, AEScreenControl scctl) {
+ 	vector<int> parseFileVector(string s, string separator) {
 		size_t positionStart = 0, positionEnd = 0, separatorLength = separator.length();
 		string tkn;
 		vector<int> returnData;
