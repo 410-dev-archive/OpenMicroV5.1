@@ -116,13 +116,13 @@ public:
   void onPress_startPuller() {
     if(!actionUpdate) actionUpdate = true;
     recentActivity = "REMOTE: PULL";
-    motor pullers[] = {PULL_MOTOR_1, PULL_MOTOR_2};
-    mtctl.runMotors(pullers, 2, directionType::fwd, speed*multiplier);
+    motor pullers[] = {PULL_MOTOR_1, PULL_MOTOR_2, INTAKE_LEFT, INTAKE_RIGHT};
+    mtctl.runMotors(pullers, 4, directionType::fwd, speed*multiplier);
   }
 
   void onRelease_puller() {
-    motor pullers[] = {PULL_MOTOR_1, PULL_MOTOR_2};
-    mtctl.stopMotors(pullers, 2);
+    motor pullers[] = {PULL_MOTOR_1, PULL_MOTOR_2, INTAKE_LEFT, INTAKE_RIGHT};
+    mtctl.stopMotors(pullers, 4);
   }
 
   void onPress_systemTerminate() {

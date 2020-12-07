@@ -23,6 +23,10 @@ public:
     return encoderObject.value();
 	}
 
+  int getMotorEncoderValue(motor motorObject) {
+    return motorObject.rotation(rotationUnits::deg);
+  }
+
   bool visionSensor(vision visionObject, int yuvData[], float rangeScaleFactor, int cameraData[]) {
     // Index order for yuvData
     // 0: ID
