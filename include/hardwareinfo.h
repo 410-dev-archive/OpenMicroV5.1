@@ -11,11 +11,13 @@ motor WHEEL_BACK_LEFT (vex::PORT4, vex::gearSetting::ratio18_1, false);
 motor WHEEL_FRONT_RIGHT (vex::PORT5, vex::gearSetting::ratio18_1, true);
 motor WHEEL_BACK_RIGHT (vex::PORT6, vex::gearSetting::ratio18_1, true);
 
-motor DUMMY(vex::PORT7, vex::gearSetting::ratio18_1, false);
-motor DUMMY2(vex::PORT8, vex::gearSetting::ratio18_1, false);
+motor INTAKE_RIGHT(vex::PORT7, vex::gearSetting::ratio18_1, false);
+motor INTAKE_LEFT(vex::PORT8, vex::gearSetting::ratio18_1, false);
 
 motor MOTOR_PULL_BALL[] = {PULL_MOTOR_1, PULL_MOTOR_2};
-motor MOTOR_ALL[] = {PULL_MOTOR_1, PULL_MOTOR_2, WHEEL_BACK_LEFT, WHEEL_BACK_RIGHT, WHEEL_FRONT_LEFT, WHEEL_FRONT_RIGHT, DUMMY, DUMMY2};
+motor MOTOR_ALL[] = {PULL_MOTOR_1, PULL_MOTOR_2, WHEEL_BACK_LEFT, WHEEL_BACK_RIGHT, WHEEL_FRONT_LEFT, WHEEL_FRONT_RIGHT, INTAKE_LEFT, INTAKE_RIGHT};
+
+motor MOTOR_INTAKE[] = {INTAKE_LEFT, INTAKE_RIGHT};
 
 motor MOTOR_WHEELS_ALL[] = {WHEEL_FRONT_LEFT, WHEEL_BACK_LEFT, WHEEL_FRONT_RIGHT, WHEEL_BACK_RIGHT};
 motor MOTOR_PULLER_ALL[] = {PULL_MOTOR_1, PULL_MOTOR_2};
