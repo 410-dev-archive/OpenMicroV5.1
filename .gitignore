@@ -4,5 +4,5 @@
 *.bin
 *.o
 *.map
-*compile_commands.json
+compile_commands.json
 *.v5code
