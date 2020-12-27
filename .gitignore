@@ -1,8 +1,19 @@
-
-.DS_Store
-*.elf
-*.bin
+# Compiled Object files
 *.o
-*.map
+*.obj
+
+# Executables
+*.bin
+*.elf
+
+# macOS
+*.DS_Store
+
+# PROS
+bin/
+.vscode/
 compile_commands.json
-*.v5code
+temp.log
+temp.errors
+*.ini
+.d/
