@@ -40,7 +40,7 @@ void global(string modeTitle) {
   short lengthOfPrefix_SideShaft = scctl.setLinePrefix(5, "Back Shaft Encoder Value: ");
 
   // Keep receives value from Shaft Encoder until motorctl.motorStatus is true.
-  while(!Controller.ButtonA.pressing() && !shouldImmediatelyExitLoop) {
+  while(/*!Controller.ButtonA.pressing() && */!shouldImmediatelyExitLoop) {
     rcctl.updateAll(Controller);
     
     // Converts returned shaft encoder value to string and sets the value of line

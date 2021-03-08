@@ -18,7 +18,7 @@ private:
   string toString(int data) {
     std::ostringstream strstream;
     strstream << data;
-    return strstream.str();
+    return strstream.str();       
   }
 
 
@@ -61,7 +61,7 @@ public:
       onRelease_wheels();
       onRelease_puller();
     }
-    if (Controller.ButtonA.pressing()) onPress_systemTerminate();
+    //if (Controller.ButtonA.pressing()) onPress_systemTerminate();
   }
 
   void addIndex() {
