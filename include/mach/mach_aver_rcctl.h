@@ -36,6 +36,8 @@ public:
   string FWD = "";
   string LFT = "";
 
+  int condition = 0;
+  float a, b, c, d, e, f;
   float speed = 25.0;
 
 	void updateAll(controller Controller) {
@@ -44,24 +46,66 @@ public:
       encRight.at(encRight.size() - 1) = srutil.getShaftEncoderValue(ENCODER_RIGHT);
       encSide.at(encSide.size() - 1) = srutil.getShaftEncoderValue(ENCODER_SIDE);
     }
+    a=0;
+    b=0;
+    c=0;
+    d=0;
+    e=0;
+    f=0;
 
     FWD = toString(Controller.Axis3.value());
     LFT = toString(Controller.Axis4.value());
 
     multiplier = 1.0;
-    if (Controller.ButtonL1.pressing()) multiplier = 2.0;
-    if (Controller.ButtonL2.pressing()) multiplier = 4.0;
+    condition = 0;
+    if (Controller.ButtonL1.pressing()){
+      multiplier = 2.0;
+    }
+    if (Controller.ButtonL2.pressing()){
+      multiplier = 4.0;
+    }
 
-    if (Controller.ButtonUp.pressing() || Controller.Axis3.value() > 120) onPress_forward();
-    else if (Controller.ButtonDown.pressing() || Controller.Axis3.value() < -120) onPress_backward();
-    else if (Controller.ButtonLeft.pressing() || Controller.Axis4.value() < -120 || Controller.Axis1.value() < -120) onPress_turnRight();
-    else if (Controller.ButtonRight.pressing() || Controller.Axis4.value() > 120 || Controller.Axis1.value() > 120) onPress_turnLeft();
-    else if (Controller.ButtonX.pressing() || Controller.Axis2.value() > 120) onPress_startPuller();
-    else{
+    if (Controller.ButtonUp.pressing() || Controller.Axis3.value() > 60){
+      e = 1;
+      a = 100.0 * multiplier;
+    }
+    if (Controller.ButtonDown.pressing() || Controller.Axis3.value() < -60){
+      e = 1;
+      a = -100.0 * multiplier;
+    }
+    if (Controller.ButtonLeft.pressing() || Controller.Axis4.value() < -60 || Controller.Axis1.value() < -60){
+      e = 1;
+      b = 100 * multiplier;
+    }
+    if (Controller.ButtonRight.pressing() || Controller.Axis4.value() > 60 || Controller.Axis1.value() > 60){
+      e = 1;
+      b = -100 * multiplier;
+    }
+    if (Controller.ButtonA.pressing() || Controller.Axis2.value() > 60){
+      e = 1;
+      onPress_startPuller();
+    }
+    // else if (Controller.ButtonA.pressing() || Controller.Axis2.value() < -60){
+    //   e = 1;
+    //   onPress_startPuller2();
+    // }
+    if (0==e){
       onRelease_wheels();
       onRelease_puller();
     }
+    else{
+      onPress_bruuh(a, b);
+    }
     //if (Controller.ButtonA.pressing()) onPress_systemTerminate();
+  }
+
+  void onPress_bruuh(int a, int b) {
+    if(!actionUpdate) actionUpdate = true;
+    recentActivity = "BRUH?";
+    WHEEL_FRONT_LEFT.spin(directionType::fwd, (a-b)/2, velocityUnits::pct);
+    WHEEL_FRONT_RIGHT.spin(directionType::fwd, (a+b)/2, velocityUnits::pct);
+    WHEEL_BACK_LEFT.spin(directionType::fwd, (a-b)/2, velocityUnits::pct);
+    WHEEL_BACK_RIGHT.spin(directionType::fwd, (a+b)/2, velocityUnits::pct);
   }
 
   void addIndex() {
@@ -120,10 +164,19 @@ public:
     mtctl.runMotors(pullers, 4, directionType::fwd, speed*multiplier);
   }
 
+  void onPress_startPuller2() {
+    if(!actionUpdate) actionUpdate = true;
+    recentActivity = "REMOTE: PULL";
+    motor pullers[] = {PULL_MOTOR_1, PULL_MOTOR_2, INTAKE_LEFT, INTAKE_RIGHT};
+    mtctl.runMotors(pullers, 4, directionType::rev, speed*multiplier);
+  }
+
   void onRelease_puller() {
     motor pullers[] = {PULL_MOTOR_1, PULL_MOTOR_2, INTAKE_LEFT, INTAKE_RIGHT};
     mtctl.stopMotors(pullers, 4);
   }
+
+
 
   void onPress_systemTerminate() {
     recentActivity = "REMOTE: STOP";
