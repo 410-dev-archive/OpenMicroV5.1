@@ -81,14 +81,14 @@ public:
       e = 1;
       b = -100 * multiplier;
     }
-    if (Controller.ButtonA.pressing() || Controller.Axis2.value() > 60){
+    if (Controller.ButtonX.pressing() || Controller.Axis2.value() > 60){
       e = 1;
       onPress_startPuller();
     }
-    // else if (Controller.ButtonA.pressing() || Controller.Axis2.value() < -60){
-    //   e = 1;
-    //   onPress_startPuller2();
-    // }
+    else if (Controller.ButtonB.pressing() || Controller.Axis2.value() < -60){
+      e = 1;
+      onPress_startPuller2();
+    }
     if (0==e){
       onRelease_wheels();
       onRelease_puller();
@@ -101,11 +101,11 @@ public:
 
   void onPress_bruuh(int a, int b) {
     if(!actionUpdate) actionUpdate = true;
-    recentActivity = "BRUH?";
-    WHEEL_FRONT_LEFT.spin(directionType::fwd, (a-b)/2, velocityUnits::pct);
-    WHEEL_FRONT_RIGHT.spin(directionType::fwd, (a+b)/2, velocityUnits::pct);
-    WHEEL_BACK_LEFT.spin(directionType::fwd, (a-b)/2, velocityUnits::pct);
-    WHEEL_BACK_RIGHT.spin(directionType::fwd, (a+b)/2, velocityUnits::pct);
+    recentActivity = "REMOTE: XAVG_TASK";
+    WHEEL_FRONT_LEFT.spin(directionType::rev, (a-b)/2, velocityUnits::pct);
+    WHEEL_FRONT_RIGHT.spin(directionType::rev, (a+b)/2, velocityUnits::pct);
+    WHEEL_BACK_LEFT.spin(directionType::rev, (a-b)/2, velocityUnits::pct);
+    WHEEL_BACK_RIGHT.spin(directionType::rev, (a+b)/2, velocityUnits::pct);
   }
 
   void addIndex() {
