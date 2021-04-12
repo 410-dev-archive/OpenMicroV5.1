@@ -41,7 +41,7 @@ void global(string modeTitle) {
 
   // Keep receives value from Shaft Encoder until motorctl.motorStatus is true.
   while(/*!Controller.ButtonA.pressing() && */!shouldImmediatelyExitLoop) {
-    rcctl.updateAll(Controller);
+    shouldImmediatelyExitLoop = rcctl.updateAll(Controller);
     
     // Converts returned shaft encoder value to string and sets the value of line
     scctl.setValueOfLine(3, lengthOfPrefix_LeftShaft, toString(ENCODER_LEFT.value()));
