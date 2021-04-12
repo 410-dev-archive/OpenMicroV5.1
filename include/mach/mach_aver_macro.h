@@ -21,15 +21,18 @@ public:
 	vector<int> loadedMacro_left{};
 	vector<int> loadedMacro_right{};
 	vector<int> loadedMacro_side{};
+  vector<int> loadedMacro_totalTime{};
 
 	void recordMacro(AERemoteControl rcctl, string fileName, AEFileControl fctl) {
 		string encoderLeft = join(rcctl.encLeft);
 		string encoderRight = join(rcctl.encRight);
 		string encoderSide = join(rcctl.encSide);
+    string totalTime = join(rcctl.times);
 
 		fctl.saveString(fileName + "_enc_Left", encoderLeft);
 		fctl.saveString(fileName + "_enc_Right", encoderRight);
 		fctl.saveString(fileName + "_enc_Side", encoderSide);
+    fctl.saveString(fileName + "_total_Time", totalTime);
 	}
 
 	string join(vector<int> vect) {
@@ -50,6 +53,7 @@ public:
 		loadedMacro_left = parseFileVector(fctl.loadString(loadedMacro_name + "_enc_Left"), " ");
 		loadedMacro_right = parseFileVector(fctl.loadString(loadedMacro_name + "_enc_Right"), " ");
 		loadedMacro_side = parseFileVector(fctl.loadString(loadedMacro_name + "_enc_Side"), " ");
+    loadedMacro_totalTime = parseFileVector(fctl.loadString(loadedMacro_name + "_total_Time"), " ")
 
 		AESensorsUtility senutil;
 		AEMotorControl motctl;

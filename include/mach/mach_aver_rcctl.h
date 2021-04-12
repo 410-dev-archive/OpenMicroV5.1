@@ -27,6 +27,8 @@ public:
   vector<int> encLeft = {0, 0};
   vector<int> encRight = {0, 0};
   vector<int> encSide = {0, 0};
+  vector<int> times = {0, 0};
+  int init_time = -1;
 
   bool actionUpdate = false;
   bool liveControl = false;
@@ -40,11 +42,14 @@ public:
   float a, b, c, d, e, f;
   float speed = 25.0;
 
-	void updateAll(controller Controller) {
+	bool updateAll(controller Controller) {
     if (!liveControl) {
       encLeft.at(encLeft.size() - 1) = srutil.getShaftEncoderValue(ENCODER_LEFT);
       encRight.at(encRight.size() - 1) = srutil.getShaftEncoderValue(ENCODER_RIGHT);
       encSide.at(encSide.size() - 1) = srutil.getShaftEncoderValue(ENCODER_SIDE);
+
+      if(init_time == -1) init_time = Brain.timer(vex::timeUnits::msec);
+      times.at(times.size() - 1) = Brain.timer(vex::timeUnits::msec) - init_time;
     }
     a=0;
     b=0;
@@ -96,7 +101,11 @@ public:
     else{
       onPress_bruuh(a, b);
     }
-    //if (Controller.ButtonA.pressing()) onPress_systemTerminate();
+    if (Controller.ButtonX.pressing()){
+      onPress_systemTerminate();
+      return 1;
+    }
+    return 0;
   }
 
   void onPress_bruuh(int a, int b) {
