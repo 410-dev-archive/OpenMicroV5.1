@@ -1,0 +1,20 @@
+#include "vex.h"
+using namespace vex;
+extern motor PULL_MOTOR_1;
+extern motor PULL_MOTOR_2;
+extern motor WHEEL_FRONT_LEFT;
+extern motor WHEEL_BACK_LEFT;
+extern motor WHEEL_FRONT_RIGHT;
+extern motor WHEEL_BACK_RIGHT;
+extern motor INTAKE_RIGHT;
+extern motor INTAKE_LEFT;
+extern motor MOTOR_PULL_BALL[];
+extern motor MOTOR_ALL[];
+extern motor MOTOR_WHEELS_ALL[];
+extern motor MOTOR_PULLER_ALL[];
+extern motor MOTOR_WHEEL_LEFT[];
+extern motor MOTOR_WHEEL_RIGHT[];
+extern triport threeWirePort;
+extern encoder ENCODER_LEFT;
+extern encoder ENCODER_RIGHT;
+extern encoder ENCODER_SIDE;
