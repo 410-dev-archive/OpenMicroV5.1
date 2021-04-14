@@ -3,6 +3,7 @@
 #include <sstream>
 #include <vector>
 
+#include "micro/MDisplay.h"
 #include "micro/MRemote.h"
 #include "micro/MMotor.h"
 #include "micro/MTypeConvert.h"
@@ -19,8 +20,8 @@ vector<int> times = {0, 0};
 int init_time = -1;
 
 bool actionUpdate = false;
-bool liveControl = false;
 float multiplier = 1.0;
+MDisplay debug_display;
 
 string recentActivity = "";
 string FWD = "";
@@ -30,18 +31,29 @@ int condition = 0;
 float a, b, c, d, e, f;
 float speed = 25.0;
 
-bool MRemote::updateAll(controller Controller) {
+bool MRemote::updateAll(controller Controller, bool liveControl) {
 
   MTypeConvert convert;
   MSensor srutil;
 
+  if(liveControl){
+    debug_display.setValueOfLine(10, 0, "I AM LIVE");
+  }
+  else{
+    debug_display.setValueOfLine(10, 0, "BRUH");
+  }
+
   if (!liveControl) {
-    encLeft.at(encLeft.size() - 1) = srutil.getShaftEncoderValue(ENCODER_LEFT);
-    encRight.at(encRight.size() - 1) = srutil.getShaftEncoderValue(ENCODER_RIGHT);
-    encSide.at(encSide.size() - 1) = srutil.getShaftEncoderValue(ENCODER_SIDE);
+    //encLeft.at(encLeft.size() - 1) = srutil.getShaftEncoderValue(ENCODER_LEFT);
+    //encRight.at(encRight.size() - 1) = srutil.getShaftEncoderValue(ENCODER_RIGHT);
+    //encSide.at(encSide.size() - 1) = srutil.getShaftEncoderValue(ENCODER_SIDE);
+    encLeft.push_back(srutil.getShaftEncoderValue(ENCODER_LEFT));
+    encRight.push_back(srutil.getShaftEncoderValue(ENCODER_RIGHT));
+    encSide.push_back(srutil.getShaftEncoderValue(ENCODER_SIDE));
 
     if(init_time == -1) init_time = Brain.timer(vex::timeUnits::msec);
-    times.at(times.size() - 1) = Brain.timer(vex::timeUnits::msec) - init_time;
+    //times.at(times.size() - 1) = 
+    times.push_back(Brain.timer(vex::timeUnits::msec) - init_time);
   }
   a=0;
   b=0;
@@ -89,7 +101,7 @@ bool MRemote::updateAll(controller Controller) {
   else{
     execute(a, b);
   }
-  if (Controller.ButtonX.pressing()){
+  if (Controller.ButtonX.pressing() && Controller.ButtonL2.pressing()){
     onPress_systemTerminate();
     return 1;
   }

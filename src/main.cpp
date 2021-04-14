@@ -3,7 +3,7 @@
 
 #include "vex.h"
 
-#include "micro/MDisplay.h"
+// #include "micro/MDisplay.h"
 #include "micro/MRemote.h"
 #include "micro/MFiles.h"
 #include "micro/MMacro.h"
@@ -18,7 +18,7 @@ bool shouldImmediatelyExitLoop = false;
 competition Competition;
 controller Controller;
 
-void global(string modeTitle) {
+MRemote global(string modeTitle, bool liveControl) {
   // Shows title screen
 
   MDisplay display;
@@ -36,7 +36,7 @@ void global(string modeTitle) {
 
   // Keep receives value from Shaft Encoder until motorctl.motorStatus is true.
   while(/*!Controller.ButtonA.pressing() && */!shouldImmediatelyExitLoop) {
-    remote.updateAll(Controller);
+    shouldImmediatelyExitLoop = remote.updateAll(Controller, liveControl);
     
     // Converts returned shaft encoder value to string and sets the value of line
     display.setValueOfLine(3, lengthOfPrefix_LeftShaft, convert.convertToString((int) ENCODER_RIGHT.value()));
@@ -45,15 +45,20 @@ void global(string modeTitle) {
     display.setValueOfLine(6, 0, remote.recentActivity + "           ");
     display.setValueOfLine(7, 0, "Forward / Backward: " + remote.FWD + "       ");
     display.setValueOfLine(8, 0, "Left / Right      : " + remote.LFT + "       ");
+
+    if(modeTitle == "RECORD MACRO MODE"){
+      display.setValueOfLine(9, 0, "Current Macro Length: " + convert.convertToString(static_cast<int>(remote.encLeft.size())));
+    }
     // display.setValueOfLine(9, 0, "Encoder 1 Stored: " + convert.convertToString(remote.encLeft.size()) + ", " + convert.convertToString(remote.encLeft.at(remote.encLeft.size() - 2)));
     // display.setValueOfLine(10, 0, "Encoder 2 Stored: " + convert.convertToString(remote.encRight.size()) + ", " + convert.convertToString(remote.encRight.at(remote.encRight.size() - 2)));
     // display.setValueOfLine(11, 0, "Encoder 3 Stored: " + convert.convertToString(remote.encSide.size()) + ", " + convert.convertToString(remote.encSide.at(remote.encSide.size() - 2)));
   }
+  return remote;
 }
 
 void remotemode() {
   MDisplay display;
-  global("REMOTE CONTROL MODE");
+  global("REMOTE CONTROL MODE", true);
   display.clearScreen();
   display.setValueOfLine(1, 0, "[*] Shutdown signal detected.");
   display.setValueOfLine(2, 0, "[*] Sensor update stopped...");
@@ -63,14 +68,14 @@ void remotemode() {
 }
 
 void recordMacroSoftware(string fileName) {
-  global("RECORD MACRO MODE");
+  MRemote remote;
+  remote = global("RECORD MACRO MODE", false);
   MDisplay display;
   MMacro macro;
-  macro.recordMacro(fileName);
   display.clearScreen();
+  macro.recordMacro(remote, fileName, display);
   display.setValueOfLine(1, 0, "[*] Record complete in file: " + fileName);
   display.setValueOfLine(2, 0, "[*] Software complete.");
-  MRemote remote;
   remote.onPress_systemTerminate();
   exit(0);
 }
@@ -79,7 +84,7 @@ void loadMacroSoftware(string fileName) {
   //global("MACRO LOAD AUTONOMOUS");
   MMacro macro;
   MDisplay display;
-  macro.loadMacro(fileName);
+  macro.loadMacro(fileName, display);
   display.setValueOfLine(5, 0, "[*] End of load macro.");
   exit(0);
 }
@@ -105,11 +110,9 @@ int main(){
   display.clearScreen();
   switch(output) {
     case 0:
-      remote.liveControl = true;
       remotemode();
 
     case 1:
-      remote.liveControl = false;
       recordMacroSoftware("DEMO");
 
     case 2:

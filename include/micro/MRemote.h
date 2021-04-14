@@ -1,3 +1,6 @@
+#ifndef REMOTE_H_
+#define REMOTE_H_
+
 #include "vex.h"
 #include <string>
 #include <vector>
@@ -12,7 +15,7 @@ public: string recentActivity;
 public: string FWD;
 public: string LFT;
 public: bool liveControl;
-public: bool updateAll(vex::controller Controller);
+public: bool updateAll(vex::controller Controller, bool liveControl);
 public: void addIndex();
 public: void execute(int a, int b);
 public: void onPress_startPuller2();
@@ -21,3 +24,5 @@ public: void onPress_startPuller();
 public: void onRelease_puller();
 public: void onPress_systemTerminate();
 };
+
+#endif

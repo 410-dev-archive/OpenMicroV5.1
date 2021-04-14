@@ -15,7 +15,7 @@ VEX V5 Macro Controller
 
 #include "micro/hardlink.h"
 #include "micro/MMacro.h"
-#include "micro/MRemote.h"
+// #include "micro/MDisplay.h"
 #include "micro/MFiles.h"
 #include "micro/MMotor.h"
 #include "micro/MSensor.h"
@@ -29,9 +29,7 @@ vector<int> loadedMacro_right{};
 vector<int> loadedMacro_side{};
 vector<int> loadedMacro_totalTime{};
 
-void MMacro::recordMacro(string fileName) {
-
-	MRemote remote;
+void MMacro::recordMacro(MRemote remote, string fileName, MDisplay debug_display) {
 	MFiles fctl;
 	MTypeConvert convert;
 
@@ -44,20 +42,32 @@ void MMacro::recordMacro(string fileName) {
 	fctl.saveString(fileName + "_enc_Right", encoderRight);
 	fctl.saveString(fileName + "_enc_Side", encoderSide);
 	fctl.saveString(fileName + "_total_Time", totalTime);
+
+  debug_display.setValueOfLine(3, 0, "length: " + convert.convertToString(static_cast<int>(remote.encLeft.size())));
 }
 
-void MMacro::loadMacro(string loadedMacro_name) {
+void MMacro::loadMacro(string loadedMacro_name, MDisplay debug_display) {
 
 	MFiles fctl;
 	MMotor motor;
 	MSensor sensor;
 	MTypeConvert convert;
 	MRemote remote;
+  int macro_length;
+  string ttt;
+  // ttt = fctl.loadString(loadedMacro_name + "_enc_Left");
+
+  // while(1){
+  //   debug_display.setValueOfLine(10, 0, "LOADED:"+ttt+":END");
+  // }
 
 	loadedMacro_left = convert.stringSplitToInt(fctl.loadString(loadedMacro_name + "_enc_Left"), " ");
 	loadedMacro_right = convert.stringSplitToInt(fctl.loadString(loadedMacro_name + "_enc_Right"), " ");
 	loadedMacro_side = convert.stringSplitToInt(fctl.loadString(loadedMacro_name + "_enc_Side"), " ");
 	loadedMacro_totalTime = convert.stringSplitToInt(fctl.loadString(loadedMacro_name + "_total_Time"), " ");
+
+  macro_length = loadedMacro_left.size();
+  debug_display.setValueOfLine(1, 0, convert.convertToString(macro_length));
 	
 	for(int i = 0; i < loadedMacro_left.size(); i++) {
 		bool motorIsAlreadyRunning = false;
