@@ -44,7 +44,6 @@ std::string MTypeConvert::stringJoin(std::vector<std::string> vect, std::string 
 }
 
 std::vector<int> MTypeConvert::stringSplitToInt(std::string s, std::string separator) {
-	size_t positionStart = 0, positionEnd = 0, separatorLength = separator.length();
 	std::string tkn;
 	std::vector<int> returnData;
 
@@ -57,7 +56,6 @@ std::vector<int> MTypeConvert::stringSplitToInt(std::string s, std::string separ
 }
 
 std::vector<std::string> MTypeConvert::stringSplitToString(std::string s, std::string separator) {
-	size_t positionStart = 0, positionEnd = 0, separatorLength = separator.length();
 	std::string tkn;
 	std::vector<std::string> returnData;
 
