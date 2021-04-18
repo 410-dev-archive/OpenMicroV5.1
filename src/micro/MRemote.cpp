@@ -21,7 +21,6 @@ int init_time = -1;
 
 bool actionUpdate = false;
 float multiplier = 1.0;
-MDisplay debug_display;
 
 string recentActivity = "";
 string FWD = "";
@@ -31,25 +30,26 @@ int condition = 0;
 float a, b, c, d, e, f;
 float speed = 25.0;
 
+#ifndef sensor
+  #define sensor MSensor()
+#endif
+#ifndef typeConvert
+  #define typeConvert MTypeConvert()
+#endif
+#ifndef motoragent
+  #define motoragent MMotor()
+#endif
+
+
 bool MRemote::updateAll(controller Controller, bool liveControl) {
-
-  MTypeConvert convert;
-  MSensor srutil;
-
-  if(liveControl){
-    debug_display.setValueOfLine(10, 0, "I AM LIVE");
-  }
-  else{
-    debug_display.setValueOfLine(10, 0, "BRUH");
-  }
 
   if (!liveControl) {
     //encLeft.at(encLeft.size() - 1) = srutil.getShaftEncoderValue(ENCODER_LEFT);
     //encRight.at(encRight.size() - 1) = srutil.getShaftEncoderValue(ENCODER_RIGHT);
     //encSide.at(encSide.size() - 1) = srutil.getShaftEncoderValue(ENCODER_SIDE);
-    encLeft.push_back(srutil.getShaftEncoderValue(ENCODER_LEFT));
-    encRight.push_back(srutil.getShaftEncoderValue(ENCODER_RIGHT));
-    encSide.push_back(srutil.getShaftEncoderValue(ENCODER_SIDE));
+    encLeft.push_back(sensor.getShaftEncoderValue(ENCODER_LEFT));
+    encRight.push_back(sensor.getShaftEncoderValue(ENCODER_RIGHT));
+    encSide.push_back(sensor.getShaftEncoderValue(ENCODER_SIDE));
 
     if(init_time == -1) init_time = Brain.timer(vex::timeUnits::msec);
     //times.at(times.size() - 1) = 
@@ -62,8 +62,8 @@ bool MRemote::updateAll(controller Controller, bool liveControl) {
   e=0;
   f=0;
 
-  FWD = convert.convertToString((int) Controller.Axis3.value());
-  LFT = convert.convertToString((int) Controller.Axis4.value());
+  FWD = typeConvert.convertToString((int) Controller.Axis3.value());
+  LFT = typeConvert.convertToString((int) Controller.Axis4.value());
 
   multiplier = 1.0;
   condition = 0;
@@ -117,34 +117,29 @@ void MRemote::execute(int a, int b) {
 }
 
 void MRemote::onRelease_wheels() {
-  MMotor mtctl;
   recentActivity = "REMOTE: RELEASED";
   motor allmotors[] = {WHEEL_FRONT_LEFT,WHEEL_BACK_RIGHT,WHEEL_BACK_LEFT,WHEEL_FRONT_RIGHT};
-  mtctl.stopMotors(allmotors, 4);
+  motoragent.stopMotors(allmotors, 4);
 }
 
 void MRemote::onPress_startPuller() {
-  MMotor mtctl;
   recentActivity = "REMOTE: PULL";
-  motor pullers[] = {PULL_MOTOR_1, PULL_MOTOR_2, INTAKE_LEFT, INTAKE_RIGHT};
-  mtctl.runMotors(pullers, 4, directionType::fwd, speed*multiplier);
+  motor pullers[] = {INTAKE_LEFT, INTAKE_RIGHT, BALLCONVEY_LOWER, BALLCONVEY_UPPER};
+  motoragent.runMotors(pullers, 4, directionType::fwd, speed*multiplier);
 }
 
 void MRemote::onPress_startPuller2() {
-  MMotor mtctl;
   recentActivity = "REMOTE: PULL";
-  motor pullers[] = {PULL_MOTOR_1, PULL_MOTOR_2, INTAKE_LEFT, INTAKE_RIGHT};
-  mtctl.runMotors(pullers, 4, directionType::rev, speed*multiplier);
+  motor pullers[] = {INTAKE_LEFT, INTAKE_RIGHT, BALLCONVEY_LOWER, BALLCONVEY_UPPER};
+  motoragent.runMotors(pullers, 4, directionType::rev, speed*multiplier);
 }
 
 void MRemote::onRelease_puller() {
-  MMotor mtctl;
-  motor pullers[] = {PULL_MOTOR_1, PULL_MOTOR_2, INTAKE_LEFT, INTAKE_RIGHT};
-  mtctl.stopMotors(pullers, 4);
+  motor pullers[] = {INTAKE_LEFT, INTAKE_RIGHT, BALLCONVEY_LOWER, BALLCONVEY_UPPER};
+  motoragent.stopMotors(pullers, 4);
 }
 
 void MRemote::onPress_systemTerminate() {
-  MMotor mtctl;
   recentActivity = "REMOTE: STOP";
-  mtctl.stopMotors(MOTOR_ALL, 8);
+  motoragent.stopMotors(MOTOR_ALL, 8);
 }

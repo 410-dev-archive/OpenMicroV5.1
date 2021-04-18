@@ -15,7 +15,6 @@ VEX V5 Macro Controller
 
 #include "micro/hardlink.h"
 #include "micro/MMacro.h"
-// #include "micro/MDisplay.h"
 #include "micro/MFiles.h"
 #include "micro/MMotor.h"
 #include "micro/MSensor.h"
@@ -29,31 +28,35 @@ vector<int> loadedMacro_right{};
 vector<int> loadedMacro_side{};
 vector<int> loadedMacro_totalTime{};
 
-void MMacro::recordMacro(MRemote remote, string fileName, MDisplay debug_display) {
-	MFiles fctl;
-	MTypeConvert convert;
+#ifndef files
+#define files MFiles()
+#endif
+#ifndef motor
+#define motor MMotor()
+#endif
+#ifndef sensor
+#define sensor MSensor()
+#endif
+#ifndef typeConvert
+#define typeConvert MTypeConvert()
+#endif
+#ifndef remote
+#define remote MRemote()
+#endif
 
-	string encoderLeft = convert.stringJoin(remote.encLeft, " ");
-	string encoderRight = convert.stringJoin(remote.encRight, " ");
-	string encoderSide = convert.stringJoin(remote.encSide, " ");
-	string totalTime = convert.stringJoin(remote.times, " ");
+void MMacro::recordMacro(string fileName) {
+	string encoderLeft = typeConvert.stringJoin(remote.encLeft, " ");
+	string encoderRight = typeConvert.stringJoin(remote.encRight, " ");
+	string encoderSide = typeConvert.stringJoin(remote.encSide, " ");
+	string totalTime = typeConvert.stringJoin(remote.times, " ");
 
-	fctl.saveString(fileName + "_enc_Left", encoderLeft);
-	fctl.saveString(fileName + "_enc_Right", encoderRight);
-	fctl.saveString(fileName + "_enc_Side", encoderSide);
-	fctl.saveString(fileName + "_total_Time", totalTime);
-
-  debug_display.setValueOfLine(3, 0, "length: " + convert.convertToString(static_cast<int>(remote.encLeft.size())));
+	files.saveString(fileName + "_enc_Left", encoderLeft);
+	files.saveString(fileName + "_enc_Right", encoderRight);
+	files.saveString(fileName + "_enc_Side", encoderSide);
+	files.saveString(fileName + "_total_Time", totalTime);
 }
 
-void MMacro::loadMacro(string loadedMacro_name, MDisplay debug_display) {
-
-	MFiles fctl;
-	MMotor motor;
-	MSensor sensor;
-	MTypeConvert convert;
-	MRemote remote;
-  int macro_length;
+void MMacro::loadMacro(string loadedMacro_name) {
   string ttt;
   // ttt = fctl.loadString(loadedMacro_name + "_enc_Left");
 
@@ -61,13 +64,10 @@ void MMacro::loadMacro(string loadedMacro_name, MDisplay debug_display) {
   //   debug_display.setValueOfLine(10, 0, "LOADED:"+ttt+":END");
   // }
 
-	loadedMacro_left = convert.stringSplitToInt(fctl.loadString(loadedMacro_name + "_enc_Left"), " ");
-	loadedMacro_right = convert.stringSplitToInt(fctl.loadString(loadedMacro_name + "_enc_Right"), " ");
-	loadedMacro_side = convert.stringSplitToInt(fctl.loadString(loadedMacro_name + "_enc_Side"), " ");
-	loadedMacro_totalTime = convert.stringSplitToInt(fctl.loadString(loadedMacro_name + "_total_Time"), " ");
-
-  macro_length = loadedMacro_left.size();
-  debug_display.setValueOfLine(1, 0, convert.convertToString(macro_length));
+	loadedMacro_left = typeConvert.stringSplitToInt(files.loadString(loadedMacro_name + "_enc_Left"), " ");
+	loadedMacro_right = typeConvert.stringSplitToInt(files.loadString(loadedMacro_name + "_enc_Right"), " ");
+	loadedMacro_side = typeConvert.stringSplitToInt(files.loadString(loadedMacro_name + "_enc_Side"), " ");
+	loadedMacro_totalTime = typeConvert.stringSplitToInt(files.loadString(loadedMacro_name + "_total_Time"), " ");
 	
 	for(int i = 0; i < loadedMacro_left.size(); i++) {
 		bool motorIsAlreadyRunning = false;

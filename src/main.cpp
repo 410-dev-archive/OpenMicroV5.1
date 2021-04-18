@@ -18,12 +18,22 @@ bool shouldImmediatelyExitLoop = false;
 competition Competition;
 controller Controller;
 
+#ifndef display
+  #define display MDisplay()
+#endif
+#ifndef remote
+  #define remote MRemote()
+#endif
+#ifndef typeConvert
+  #define typeConvert MTypeConvert()
+#endif
+#ifndef macro
+  #define macro MMacro()
+#endif
+
+
 MRemote global(string modeTitle, bool liveControl) {
   // Shows title screen
-
-  MDisplay display;
-  MRemote remote;
-  MTypeConvert convert;
 
   display.setValueOfLine(1, 0, "  Team AVER OpenMicroV5.1 Kernel - 1.0 Beta 1");
   display.setValueOfLine(2, 0, modeTitle + "===========================");
@@ -39,25 +49,24 @@ MRemote global(string modeTitle, bool liveControl) {
     shouldImmediatelyExitLoop = remote.updateAll(Controller, liveControl);
     
     // Converts returned shaft encoder value to string and sets the value of line
-    display.setValueOfLine(3, lengthOfPrefix_LeftShaft, convert.convertToString((int) ENCODER_RIGHT.value()));
-    display.setValueOfLine(4, lengthOfPrefix_RigthShaft, convert.convertToString((int) ENCODER_RIGHT.value()));
-    display.setValueOfLine(5, lengthOfPrefix_SideShaft, convert.convertToString((int) ENCODER_SIDE.value()));
+    display.setValueOfLine(3, lengthOfPrefix_LeftShaft, typeConvert.convertToString((int) ENCODER_RIGHT.value()));
+    display.setValueOfLine(4, lengthOfPrefix_RigthShaft, typeConvert.convertToString((int) ENCODER_RIGHT.value()));
+    display.setValueOfLine(5, lengthOfPrefix_SideShaft, typeConvert.convertToString((int) ENCODER_SIDE.value()));
     display.setValueOfLine(6, 0, remote.recentActivity + "           ");
     display.setValueOfLine(7, 0, "Forward / Backward: " + remote.FWD + "       ");
     display.setValueOfLine(8, 0, "Left / Right      : " + remote.LFT + "       ");
 
     if(modeTitle == "RECORD MACRO MODE"){
-      display.setValueOfLine(9, 0, "Current Macro Length: " + convert.convertToString(static_cast<int>(remote.encLeft.size())));
+      display.setValueOfLine(9, 0, "Current Macro Length: " + typeConvert.convertToString(static_cast<int>(remote.encLeft.size())));
     }
-    // display.setValueOfLine(9, 0, "Encoder 1 Stored: " + convert.convertToString(remote.encLeft.size()) + ", " + convert.convertToString(remote.encLeft.at(remote.encLeft.size() - 2)));
-    // display.setValueOfLine(10, 0, "Encoder 2 Stored: " + convert.convertToString(remote.encRight.size()) + ", " + convert.convertToString(remote.encRight.at(remote.encRight.size() - 2)));
-    // display.setValueOfLine(11, 0, "Encoder 3 Stored: " + convert.convertToString(remote.encSide.size()) + ", " + convert.convertToString(remote.encSide.at(remote.encSide.size() - 2)));
+    // display.setValueOfLine(9, 0, "Encoder 1 Stored: " + typeConvert.convertToString(remote.encLeft.size()) + ", " + convert.convertToString(remote.encLeft.at(remote.encLeft.size() - 2)));
+    // display.setValueOfLine(10, 0, "Encoder 2 Stored: " + typeConvert.convertToString(remote.encRight.size()) + ", " + convert.convertToString(remote.encRight.at(remote.encRight.size() - 2)));
+    // display.setValueOfLine(11, 0, "Encoder 3 Stored: " + typeConvert.convertToString(remote.encSide.size()) + ", " + convert.convertToString(remote.encSide.at(remote.encSide.size() - 2)));
   }
   return remote;
 }
 
 void remotemode() {
-  MDisplay display;
   global("REMOTE CONTROL MODE", true);
   display.clearScreen();
   display.setValueOfLine(1, 0, "[*] Shutdown signal detected.");
@@ -68,12 +77,9 @@ void remotemode() {
 }
 
 void recordMacroSoftware(string fileName) {
-  MRemote remote;
   remote = global("RECORD MACRO MODE", false);
-  MDisplay display;
-  MMacro macro;
   display.clearScreen();
-  macro.recordMacro(remote, fileName, display);
+  macro.recordMacro(fileName);
   display.setValueOfLine(1, 0, "[*] Record complete in file: " + fileName);
   display.setValueOfLine(2, 0, "[*] Software complete.");
   remote.onPress_systemTerminate();
@@ -82,15 +88,12 @@ void recordMacroSoftware(string fileName) {
 
 void loadMacroSoftware(string fileName) {
   //global("MACRO LOAD AUTONOMOUS");
-  MMacro macro;
-  MDisplay display;
-  macro.loadMacro(fileName, display);
+  macro.loadMacro(fileName);
   display.setValueOfLine(5, 0, "[*] End of load macro.");
   exit(0);
 }
 
 short menu() {
-  MDisplay display;
   display.setValueOfLine(1, 0, "  Team AVER - MachMO System 2020 - 1.0 Beta 4");
   display.setValueOfLine(2, 0, " MAIN MENU:");
   display.setValueOfLine(3, 0, "X: Remote Control Only");
@@ -104,8 +107,6 @@ short menu() {
 }
 
 int main(){
-  MDisplay display;
-  MRemote remote;
   short output = menu();
   display.clearScreen();
   switch(output) {

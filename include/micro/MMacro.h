@@ -11,6 +11,6 @@ public: vector<int> sideEncoder;
 // public: vector<int> getLeftEncoderVector();
 // public: vector<int> getRightEncoderVector();
 // public: vector<int> getSideEncoderVector();
-public: void recordMacro(MRemote remote, std::string fileName, MDisplay debug_display);
-public: void loadMacro(std::string loadedMacro_name, MDisplay debug_display);
+public: void recordMacro(std::string fileName);
+public: void loadMacro(std::string loadedMacro_name);
 };
