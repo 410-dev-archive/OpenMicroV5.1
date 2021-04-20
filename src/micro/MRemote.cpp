@@ -124,10 +124,10 @@ void MRemote::onRelease_wheels() {
 
 void MRemote::onPress_startPuller() {
   recentActivity = "REMOTE: PULL";
-  motor pullers[] = {INTAKE_LEFT, INTAKE_RIGHT, BALLCONVEY_LOWER, BALLCONVEY_UPPER};
-  motoragent.runMotors(pullers, 4, directionType::fwd, speed*multiplier);
-}
-
+  motor pullers[] = {BALLCONVEY_LOWER, BALLCONVEY_UPPER};
+  motor intakes[] = {INTAKE_LEFT, INTAKE_RIGHT};
+  motoragent.runMotors(pullers, 2, directionType::fwd, speed*multiplier);
+  motoragent.runMotors(intakes, 2, directionType::fwd, (speed + 30)*multiplier);
 }
 
 void MRemote::onRelease_puller() {
