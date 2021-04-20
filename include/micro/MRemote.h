@@ -18,7 +18,6 @@ public: bool liveControl;
 public: bool updateAll(vex::controller Controller, bool liveControl);
 public: void addIndex();
 public: void execute(int a, int b);
-public: void onPress_startPuller2();
 public: void onRelease_wheels();
 public: void onPress_startPuller();
 public: void onRelease_puller();
